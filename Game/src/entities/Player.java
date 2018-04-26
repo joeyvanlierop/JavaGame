@@ -7,7 +7,7 @@ import level.Level;
 public class Player extends Mob {
     private KeyHandler input;
 
-    public Player(int x, int y, int moveSpeed, SpriteSheet spriteSheet, KeyHandler input, Level level)
+    public Player(double x, double y, double moveSpeed, SpriteSheet spriteSheet, KeyHandler input, Level level)
     {
         super("Player", x, y, spriteSheet, 16, 0, 16, 16, moveSpeed, level);
 
@@ -25,19 +25,19 @@ public class Player extends Mob {
         int yMove = 0;
 
         if (input.up.isPressed()) {
-            yMove--;
+            yMove -= moveSpeed;
         }
 
         if (input.down.isPressed()) {
-            yMove++;
+            yMove += moveSpeed;
         }
 
         if (input.left.isPressed()) {
-            xMove--;
+            xMove -= moveSpeed;
         }
 
         if (input.right.isPressed()) {
-            xMove++;
+            xMove += moveSpeed;
         }
 
         if (xMove != 0 || yMove != 0) {
@@ -46,38 +46,23 @@ public class Player extends Mob {
     }
 
     @Override
-    protected boolean hasCollided(int xMove, int yMove)
+    //https://www.youtube.com/watch?v=Msd953YEZhg
+    protected boolean collision(int xMove, int yMove)
     {
-        int xMin = 0;
-        int xMax = 15;
-        int yMin = 0;
-        int yMax = 15;
-
-        for (int x = xMin; x <= xMax; x++)
+        for(int corner = 0; corner < 4; corner++)
         {
-            if (isSolidTile(x, yMin, xMove, yMove)) {
-                return true;
-            }
-        }
+            double xTile = (x + xMove) + corner % 2 * 15;
+            double yTile = (y + yMove) + corner / 2 * 15;
 
-        for(int x = xMin; x <= xMax; x++)
-        {
-            if(isSolidTile(x, yMax, xMove, yMove))
-            {
-                return true;
-            }
-        }
+            int ix = (int) Math.ceil(xTile);
+            int iy = (int) Math.ceil(yTile);
 
-        for (int y = yMin; y <= yMax; y++)
-        {
-            if (isSolidTile(xMin, y, xMove, yMove)) {
-                return true;
-            }
-        }
+            if(corner % 2 == 0)
+                ix = (int) Math.floor(xTile);
+            if(corner / 2 == 0)
+                iy = (int) Math.floor(yTile);
 
-        for(int y = yMin; y <= yMax; y++)
-        {
-            if(isSolidTile(xMax, y, xMove, yMove))
+            if(level.getTile(ix, iy).isSolid())
             {
                 return true;
             }

@@ -2,13 +2,12 @@ package entities;
 
 import gfx.SpriteSheet;
 import level.Level;
-import tiles.Tile;
 
 public abstract class Mob extends Entity {
-    protected int moveSpeed;
+    protected double moveSpeed;
     protected Level level;
 
-    public Mob(String name, int x, int y, SpriteSheet spriteSheet, int spriteX, int spriteY, int width, int height, int moveSpeed, Level level)
+    public Mob(String name, double x, double y, SpriteSheet spriteSheet, int spriteX, int spriteY, int width, int height, double moveSpeed, Level level)
     {
         super(name, x, y, spriteSheet, spriteX, spriteY, width, height);
 
@@ -26,23 +25,20 @@ public abstract class Mob extends Entity {
             return;
         }
 
-        if (!hasCollided(xMove, yMove)) {
-            x += xMove * moveSpeed;
-            y += yMove * moveSpeed;
+        //TODO: HOLY FUCK ITS ALL BROKEN
+
+        for(int xi = 0; xi < xMove; xi++) {
+            if (!collision(xi, yMove)) {
+                this.x ++;
+            }
+        }
+
+        for(int yi = 0; yi < xMove; y++) {
+            if (!collision(xMove, yi)) {
+                this.y ++;
+            }
         }
     }
 
-    protected boolean isSolidTile(int xOffset, int yOffset, int xMove, int yMove)
-    {
-        Tile currentTile = level.getTile(x + xOffset, y + yOffset);
-        Tile nextTile = level.getTile(x + xMove + xOffset, y + yMove + yOffset);
-
-        if (currentTile != nextTile && nextTile.isSolid()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    protected abstract boolean hasCollided(int xMove, int yMove);
+    protected abstract boolean collision(int xMove, int yMove);
 }

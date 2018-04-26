@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable {
         input = new KeyHandler(this);
         tm = new TileManager(new SpriteSheet("/img/tile_sheet.png"));
         level = new Level("/levels/level_01.png", tm);
-        player = new Player(250, 250, 2, new SpriteSheet("/img/player.png"), input, level);
+        player = new Player(250, 250, 3, new SpriteSheet("/img/player.png"), input, level);
         camera = new Camera(level.getWidth() * Tile.TILESIZE,
                 level.getWidth() * Tile.TILESIZE,
                 350,
@@ -88,7 +88,7 @@ public class Game extends Canvas implements Runnable {
                 timer += 1000;
 
                 window.setTitle(String.format("FPS: %d, UPS: %d\n", frames, updates));
-                System.out.printf("TileType: %s\n", level.getTile(player.getX(), player.getY()));
+                System.out.printf("TileType: %s\n", level.getTile((int) player.getX(), (int)player.getY()));
 
                 frames = 0;
                 updates = 0;

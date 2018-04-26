@@ -5,13 +5,13 @@ import gfx.SpriteSheet;
 
 public abstract class Entity {
     protected String name;
-    protected int x;
-    protected int y;
+    protected double x;
+    protected double y;
     protected int width;
     protected int height;
     protected int[] sprite;
 
-    public Entity(String name, int x, int y, SpriteSheet spriteSheet, int spriteX, int spriteY, int width, int height)
+    public Entity(String name, double x, double y, SpriteSheet spriteSheet, int spriteX, int spriteY, int width, int height)
     {
         super();
         this.name = name;
@@ -26,15 +26,15 @@ public abstract class Entity {
 
     public void render(Renderer renderer)
     {
-        renderer.renderSprite(sprite, x, y, width, height);
+        renderer.renderSprite(sprite, (int) x, (int) y, width, height);
     }
 
-    public int getX()
+    public double getX()
     {
         return x;
     }
 
-    public int getY()
+    public double getY()
     {
         return y;
     }
