@@ -32,12 +32,12 @@ public abstract class Mob extends Entity {
         }
     }
 
-    protected boolean collide(int xMove, int yMove)
+    protected boolean isSolidTile(int xOffset, int yOffset, int xMove, int yMove)
     {
-        //Tile currentTile = level.getTile(x, y);
-        Tile nextTile = level.getTile(x + (xMove * moveSpeed) + (width / 2), y + (yMove * moveSpeed) + (height / 2));
+        Tile currentTile = level.getTile(x + xOffset, y + yOffset);
+        Tile nextTile = level.getTile(x + xMove + xOffset, y + yMove + yOffset);
 
-        if (nextTile.isSolid()) {
+        if (currentTile != nextTile && nextTile.isSolid()) {
             return true;
         } else {
             return false;

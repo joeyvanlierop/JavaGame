@@ -13,7 +13,7 @@ public class Tile {
     public Tile(TileType tileType, SpriteSheet spriteSheet)
     {
         this.tileType = tileType;
-        this.sprite = new Sprite(tileType.x, tileType.y, TILESIZE, TILESIZE, spriteSheet);
+        this.sprite = new Sprite(tileType.x * TILESIZE, tileType.y * TILESIZE, TILESIZE, TILESIZE, spriteSheet);
     }
 
     public void renderTile(Renderer renderer, int xPosition, int yPosition)

@@ -3,7 +3,7 @@ package game;
 import entities.Player;
 import gfx.Renderer;
 import gfx.SpriteSheet;
-import input.InputHandler;
+import input.KeyHandler;
 import level.Level;
 import tiles.Tile;
 import tiles.TileManager;
@@ -22,7 +22,7 @@ public class Game extends Canvas implements Runnable {
     private Camera camera;
     private Renderer renderer;
     private TileManager tm;
-    private InputHandler input;
+    private KeyHandler input;
     private Level level;
 
     private boolean running = false;
@@ -35,7 +35,7 @@ public class Game extends Canvas implements Runnable {
 
     public Game()
     {
-        input = new InputHandler(this);
+        input = new KeyHandler(this);
         tm = new TileManager(new SpriteSheet("/img/tile_sheet.png"));
         level = new Level("/levels/level_01.png", tm);
         player = new Player(250, 250, 2, new SpriteSheet("/img/player.png"), input, level);
@@ -88,7 +88,7 @@ public class Game extends Canvas implements Runnable {
                 timer += 1000;
 
                 window.setTitle(String.format("FPS: %d, UPS: %d\n", frames, updates));
-                System.out.printf("X: %d, Y: %d\n", player.getX(), player.getY());
+                System.out.printf("TileType: %s\n", level.getTile(player.getX(), player.getY()));
 
                 frames = 0;
                 updates = 0;

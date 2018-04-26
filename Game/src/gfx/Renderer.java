@@ -44,7 +44,7 @@ public class Renderer {
         g.dispose();
     }
 
-    public void renderPixel(double x, double y, int color)
+    public void renderPixel(int x, int y, int color)
     {
         if (x >= 0 && x < camera.getViewportHeight()) {
             double pixelIndex = x + y * camera.getViewportWidth();
@@ -57,14 +57,14 @@ public class Renderer {
         }
     }
 
-    public void renderSprite(int spritePixels[], double xPosition, double yPosition, int spriteWidth, int spriteHeight)
+    public void renderSprite(int spritePixels[], int xPosition, int yPosition, int spriteWidth, int spriteHeight)
     {
         for (int y = 0; y < spriteHeight; y++) {
             for (int x = 0; x < spriteWidth; x++) {
 
                 renderPixel(x + xPosition - camera.getX(),
-                        y + yPosition - camera.getY(),
-                        spritePixels[x + y * spriteWidth]);
+                            y + yPosition - camera.getY(),
+                            spritePixels[x + y * spriteWidth]);
             }
         }
     }

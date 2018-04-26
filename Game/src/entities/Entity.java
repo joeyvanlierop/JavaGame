@@ -26,7 +26,7 @@ public abstract class Entity {
 
     public void render(Renderer renderer)
     {
-        renderer.renderSprite(sprite, x - width / 2, y - height / 2, width, height);
+        renderer.renderSprite(sprite, x, y, width, height);
     }
 
     public int getX()

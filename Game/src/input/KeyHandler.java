@@ -5,7 +5,7 @@ import game.Game;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class InputHandler extends KeyAdapter {
+public class KeyHandler extends KeyAdapter {
     public class Key {
         private boolean pressed = false;
 
@@ -20,7 +20,7 @@ public class InputHandler extends KeyAdapter {
         }
     }
 
-    public InputHandler(Game game)
+    public KeyHandler(Game game)
     {
         game.addKeyListener(this);
     }
