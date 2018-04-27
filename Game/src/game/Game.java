@@ -50,7 +50,9 @@ public class Game extends Canvas implements Runnable {
     public synchronized void start()
     {
         if (running)
+        {
             return;
+        }
 
         running = true;
         thread = new Thread(this);
@@ -88,7 +90,6 @@ public class Game extends Canvas implements Runnable {
                 timer += 1000;
 
                 window.setTitle(String.format("FPS: %d, UPS: %d\n", frames, updates));
-                System.out.printf("TileType: %s\n", level.getTile((int) player.getX(), (int)player.getY()));
 
                 frames = 0;
                 updates = 0;

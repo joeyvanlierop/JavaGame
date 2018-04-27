@@ -16,29 +16,69 @@ public abstract class Mob extends Entity {
     }
 
     // https://github.com/vanZeben/2D-Game-Engine/blob/master/src/ca/vanzeben/game/entities/Mob.java
-    protected void move(int xMove, int yMove)
+    // https://www.youtube.com/watch?v=XugjVIOhXBE
+    protected void move(double xMove, double yMove)
     {
-        if (xMove != 0 && yMove != 0) {
+        if (xMove != 0 && yMove != 0)
+        {
             move(xMove, 0);
             move(0, yMove);
 
             return;
         }
 
-        //TODO: HOLY FUCK ITS ALL BROKEN
+        while(xMove != 0)
+        {
+            if(Math.abs(xMove) > 1)
+            {
+                if (!collision(abs(xMove), yMove))
+                {
+                    this.x += abs(xMove);
+                }
 
-        for(int xi = 0; xi < xMove; xi++) {
-            if (!collision(xi, yMove)) {
-                this.x ++;
+                xMove -= abs(xMove);
+            }
+            else
+            {
+                if (!collision(abs(xMove), yMove))
+                {
+                    this.x += xMove;
+                }
+
+                xMove = 0;
             }
         }
 
-        for(int yi = 0; yi < xMove; y++) {
-            if (!collision(xMove, yi)) {
-                this.y ++;
+        while(yMove != 0)
+        {
+            if(Math.abs(yMove) > 1)
+            {
+                if (!collision(xMove, abs(yMove)))
+                {
+                    this.y += abs(yMove);
+                }
+
+                yMove -= abs(yMove);
+            }
+            else
+            {
+                if (!collision(xMove, abs(yMove)))
+                {
+                    this.y += yMove;
+                }
+
+                yMove = 0;
             }
         }
     }
 
-    protected abstract boolean collision(int xMove, int yMove);
+    private int abs(double i)
+    {
+        if(i < 0)
+            return -1;
+
+        return 1;
+    }
+
+    protected abstract boolean collision(double xMove, double yMove);
 }

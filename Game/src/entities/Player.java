@@ -21,8 +21,8 @@ public class Player extends Mob {
 
     private void input()
     {
-        int xMove = 0;
-        int yMove = 0;
+        double xMove = 0;
+        double yMove = 0;
 
         if (input.up.isPressed()) {
             yMove -= moveSpeed;
@@ -47,22 +47,14 @@ public class Player extends Mob {
 
     @Override
     //https://www.youtube.com/watch?v=Msd953YEZhg
-    protected boolean collision(int xMove, int yMove)
+    protected boolean collision(double xMove, double yMove)
     {
         for(int corner = 0; corner < 4; corner++)
         {
             double xTile = (x + xMove) + corner % 2 * 15;
             double yTile = (y + yMove) + corner / 2 * 15;
 
-            int ix = (int) Math.ceil(xTile);
-            int iy = (int) Math.ceil(yTile);
-
-            if(corner % 2 == 0)
-                ix = (int) Math.floor(xTile);
-            if(corner / 2 == 0)
-                iy = (int) Math.floor(yTile);
-
-            if(level.getTile(ix, iy).isSolid())
+            if(level.getTile((int) xTile, (int) yTile).isSolid())
             {
                 return true;
             }
