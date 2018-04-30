@@ -6,7 +6,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class SpriteSheet {
+public class SpriteSheet
+{
 
     private BufferedImage image;
 
@@ -16,13 +17,16 @@ public class SpriteSheet {
 
     public SpriteSheet(String path)
     {
-        try {
+        try
+        {
             this.image = ImageIO.read(Game.class.getResource(path));
-        } catch (IOException e) {
+        } catch (IOException e)
+        {
             e.printStackTrace();
         }
 
-        if (image == null) {
+        if (image == null)
+        {
             return;
         }
 
@@ -37,8 +41,10 @@ public class SpriteSheet {
     {
         int[] spritePixels = new int[spriteWidth * spriteHeight];
 
-        for (int y = 0; y < spriteHeight; y++) {
-            for (int x = 0; x < spriteWidth; x++) {
+        for (int y = 0; y < spriteHeight; y++)
+        {
+            for (int x = 0; x < spriteWidth; x++)
+            {
                 spritePixels[x + y * spriteWidth] = getPixel(x + xOffset, y + yOffset);
             }
         }
@@ -48,7 +54,8 @@ public class SpriteSheet {
 
     public int getPixel(int x, int y)
     {
-        if (x < 0 || x >= width || y < 0 || y >= height) {
+        if (x < 0 || x >= width || y < 0 || y >= height)
+        {
             return 0xff00ff;
         }
 

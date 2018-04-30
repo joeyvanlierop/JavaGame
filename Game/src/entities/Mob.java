@@ -3,7 +3,8 @@ package entities;
 import gfx.SpriteSheet;
 import level.Level;
 
-public abstract class Mob extends Entity {
+public abstract class Mob extends Entity
+{
     protected double moveSpeed;
     protected Level level;
 
@@ -27,9 +28,9 @@ public abstract class Mob extends Entity {
             return;
         }
 
-        while(xMove != 0)
+        while (xMove != 0)
         {
-            if(Math.abs(xMove) > 1)
+            if (Math.abs(xMove) > 1)
             {
                 if (!collision(abs(xMove), yMove))
                 {
@@ -37,8 +38,7 @@ public abstract class Mob extends Entity {
                 }
 
                 xMove -= abs(xMove);
-            }
-            else
+            } else
             {
                 if (!collision(abs(xMove), yMove))
                 {
@@ -49,9 +49,9 @@ public abstract class Mob extends Entity {
             }
         }
 
-        while(yMove != 0)
+        while (yMove != 0)
         {
-            if(Math.abs(yMove) > 1)
+            if (Math.abs(yMove) > 1)
             {
                 if (!collision(xMove, abs(yMove)))
                 {
@@ -59,8 +59,7 @@ public abstract class Mob extends Entity {
                 }
 
                 yMove -= abs(yMove);
-            }
-            else
+            } else
             {
                 if (!collision(xMove, abs(yMove)))
                 {
@@ -74,7 +73,7 @@ public abstract class Mob extends Entity {
 
     private int abs(double i)
     {
-        if(i < 0)
+        if (i < 0)
             return -1;
 
         return 1;

@@ -11,12 +11,13 @@ import tiles.TileManager;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class Game extends Canvas implements Runnable {
+public class Game extends Canvas implements Runnable
+{
     private static final long serialVersionUID = 1L;
 
     private static Window window;
-    public static int width = 700;
-    public static int height = 700;
+    public static int width = 900;
+    public static int height = 900;
 
     private Player player;
     private Camera camera;
@@ -39,11 +40,7 @@ public class Game extends Canvas implements Runnable {
         tm = new TileManager(new SpriteSheet("/img/tile_sheet.png"));
         level = new Level("/levels/level_01.png", tm);
         player = new Player(250, 250, 3, new SpriteSheet("/img/player.png"), input, level);
-        camera = new Camera(level.getWidth() * Tile.TILESIZE,
-                level.getWidth() * Tile.TILESIZE,
-                350,
-                350,
-                player);
+        camera = new Camera(level, player,500,500);
         renderer = new Renderer(camera);
     }
 
@@ -61,8 +58,8 @@ public class Game extends Canvas implements Runnable {
 
     public void run()
     {
-        final double UPS = 60.0;
-        final double UPS_NS = 1000000000.0 / UPS;
+        final double UPS = 60;
+        final double UPS_NS = 1000000000 / UPS;
 
         double deltaTime = 0;
         long currentTime = System.nanoTime();
@@ -72,12 +69,14 @@ public class Game extends Canvas implements Runnable {
         int frames = 0;
         int updates = 0;
 
-        while (running) {
+        while (running)
+        {
             currentTime = System.nanoTime();
             deltaTime += (currentTime - lastTime) / UPS_NS;
             lastTime = currentTime;
 
-            while (deltaTime >= 1.0) {
+            while (deltaTime >= 1.0)
+            {
                 tick();
                 updates++;
                 deltaTime -= 1.0;
@@ -86,7 +85,8 @@ public class Game extends Canvas implements Runnable {
             render();
             frames++;
 
-            if (System.currentTimeMillis() - timer > 1000) {
+            if (System.currentTimeMillis() - timer > 1000)
+            {
                 timer += 1000;
 
                 window.setTitle(String.format("FPS: %d, UPS: %d\n", frames, updates));
@@ -101,7 +101,8 @@ public class Game extends Canvas implements Runnable {
     {
         BufferStrategy bs = this.getBufferStrategy();
 
-        if (bs == null) {
+        if (bs == null)
+        {
             this.createBufferStrategy(3);
             return;
         }

@@ -4,7 +4,8 @@ import gfx.SpriteSheet;
 import input.KeyHandler;
 import level.Level;
 
-public class Player extends Mob {
+public class Player extends Mob
+{
     private KeyHandler input;
 
     public Player(double x, double y, double moveSpeed, SpriteSheet spriteSheet, KeyHandler input, Level level)
@@ -24,23 +25,28 @@ public class Player extends Mob {
         double xMove = 0;
         double yMove = 0;
 
-        if (input.up.isPressed()) {
+        if (input.up.isPressed())
+        {
             yMove -= moveSpeed;
         }
 
-        if (input.down.isPressed()) {
+        if (input.down.isPressed())
+        {
             yMove += moveSpeed;
         }
 
-        if (input.left.isPressed()) {
+        if (input.left.isPressed())
+        {
             xMove -= moveSpeed;
         }
 
-        if (input.right.isPressed()) {
+        if (input.right.isPressed())
+        {
             xMove += moveSpeed;
         }
 
-        if (xMove != 0 || yMove != 0) {
+        if (xMove != 0 || yMove != 0)
+        {
             move(xMove, yMove);
         }
     }
@@ -49,12 +55,12 @@ public class Player extends Mob {
     //https://www.youtube.com/watch?v=Msd953YEZhg
     protected boolean collision(double xMove, double yMove)
     {
-        for(int corner = 0; corner < 4; corner++)
+        for (int corner = 0; corner < 4; corner++)
         {
             double xTile = (x + xMove) + corner % 2 * 15;
             double yTile = (y + yMove) + corner / 2 * 15;
 
-            if(level.getTile((int) xTile, (int) yTile).isSolid())
+            if (level.getTile((int) xTile, (int) yTile).isSolid())
             {
                 return true;
             }

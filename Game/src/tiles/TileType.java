@@ -1,6 +1,7 @@
 package tiles;
 
-public enum TileType {
+public enum TileType
+{
 
     Grass(0, 0, "ff00ff00", false),
     Dirt(3, 0, "ffb97a57", false),

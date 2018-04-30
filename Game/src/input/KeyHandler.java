@@ -5,8 +5,10 @@ import game.Game;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class KeyHandler extends KeyAdapter {
-    public class Key {
+public class KeyHandler extends KeyAdapter
+{
+    public class Key
+    {
         private boolean pressed = false;
 
         public void setValue(boolean value)
@@ -42,16 +44,20 @@ public class KeyHandler extends KeyAdapter {
 
     public void setKey(int keyCode, boolean value)
     {
-        if (keyCode == KeyEvent.VK_W) {
+        if (keyCode == KeyEvent.VK_W)
+        {
             up.setValue(value);
         }
-        if (keyCode == KeyEvent.VK_S) {
+        if (keyCode == KeyEvent.VK_S)
+        {
             down.setValue(value);
         }
-        if (keyCode == KeyEvent.VK_A) {
+        if (keyCode == KeyEvent.VK_A)
+        {
             left.setValue(value);
         }
-        if (keyCode == KeyEvent.VK_D) {
+        if (keyCode == KeyEvent.VK_D)
+        {
             right.setValue(value);
         }
     }

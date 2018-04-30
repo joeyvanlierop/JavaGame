@@ -2,21 +2,23 @@ package game;
 
 import entities.Entity;
 import entities.Player;
+import level.Level;
+import tiles.Tile;
 
-public class Camera {
+public class Camera
+{
     private int maxOffsetX;
     private int maxOffsetY;
     private int minOffsetX;
     private int minOffsetY;
     private int viewportWidth;
     private int viewportHeight;
-
     private Entity target;
 
-    public Camera(int maxOffsetX, int maxOffsetY, int viewportWidth, int viewportHeight, Player target)
+    public Camera(Level level, Player target, int viewportWidth, int viewportHeight)
     {
-        this.maxOffsetX = maxOffsetX - viewportWidth;
-        this.maxOffsetY = maxOffsetY - viewportHeight;
+        this.maxOffsetX = level.getWidth() * Tile.TILESIZE - viewportWidth;
+        this.maxOffsetY = level.getWidth() * Tile.TILESIZE - viewportHeight;
         this.minOffsetX = 0;
         this.minOffsetY = 0;
         this.viewportWidth = viewportWidth;

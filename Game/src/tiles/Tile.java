@@ -4,7 +4,8 @@ import gfx.Renderer;
 import gfx.Sprite;
 import gfx.SpriteSheet;
 
-public class Tile {
+public class Tile
+{
     public static int TILESIZE = 16;
 
     private TileType tileType;
@@ -18,7 +19,7 @@ public class Tile {
 
     public void renderTile(Renderer renderer, int xPosition, int yPosition)
     {
-        renderer.renderSprite(sprite.getPixels(), xPosition, yPosition, TILESIZE, TILESIZE);
+        renderer.renderSprite(sprite, xPosition, yPosition);
     }
 
     public boolean isSolid()
