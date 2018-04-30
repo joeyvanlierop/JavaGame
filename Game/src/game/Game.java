@@ -16,8 +16,8 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     private static Window window;
-    public static int width = 900;
-    public static int height = 900;
+    public static int width = 600;
+    public static int height = 600;
 
     private Player player;
     private Camera camera;
@@ -40,7 +40,7 @@ public class Game extends Canvas implements Runnable
         tm = new TileManager(new SpriteSheet("/img/tile_sheet.png"));
         level = new Level("/levels/level_01.png", tm);
         player = new Player(250, 250, 3, new SpriteSheet("/img/player.png"), input, level);
-        camera = new Camera(level, player,500,500);
+        camera = new Camera(level, player,250,250);
         renderer = new Renderer(camera);
     }
 
