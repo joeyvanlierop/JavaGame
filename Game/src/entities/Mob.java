@@ -5,6 +5,7 @@ import level.Level;
 
 public abstract class Mob extends Entity
 {
+    protected int dir = 0;
     protected double moveSpeed;
     protected Level level;
 
@@ -17,6 +18,7 @@ public abstract class Mob extends Entity
     }
 
     // https://github.com/vanZeben/2D-Game-Engine/blob/master/src/ca/vanzeben/game/entities/Mob.java
+    // https://www.youtube.com/watch?v=Msd953YEZhg
     // https://www.youtube.com/watch?v=XugjVIOhXBE
     protected void move(double xMove, double yMove)
     {
@@ -71,6 +73,8 @@ public abstract class Mob extends Entity
         }
     }
 
+    protected abstract boolean collision(double xMove, double yMove);
+
     private int abs(double i)
     {
         if (i < 0)
@@ -78,6 +82,4 @@ public abstract class Mob extends Entity
 
         return 1;
     }
-
-    protected abstract boolean collision(double xMove, double yMove);
 }
