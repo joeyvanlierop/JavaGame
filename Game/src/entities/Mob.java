@@ -1,5 +1,6 @@
 package entities;
 
+import gfx.Sprite;
 import gfx.SpriteSheet;
 import level.Level;
 
@@ -9,9 +10,9 @@ public abstract class Mob extends Entity
     protected double moveSpeed;
     protected Level level;
 
-    public Mob(String name, double x, double y, SpriteSheet spriteSheet, int spriteX, int spriteY, int width, int height, double moveSpeed, Level level)
+    public Mob(String name, double x, double y, Sprite sprite, double moveSpeed, Level level)
     {
-        super(name, x, y, spriteSheet, spriteX, spriteY, width, height);
+        super(name, x, y, sprite);
 
         this.moveSpeed = moveSpeed;
         this.level = level;
@@ -73,9 +74,23 @@ public abstract class Mob extends Entity
         }
     }
 
-    protected abstract boolean collision(double xMove, double yMove);
+    protected boolean collision(double xMove, double yMove)
+    {
+        for (int corner = 0; corner < 4; corner++)
+        {
+            double xTile = (x + xMove) + corner % 2 * (sprite.getWidth() - Math.abs(15 - sprite.getWidth()));
+            double yTile = (y + yMove) + corner / 2 * (sprite.getHeight() - Math.abs(15 - sprite.getHeight()));
 
-    private int abs(double i)
+            if (level.getTile((int) xTile, (int) yTile).isSolid())
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    protected int abs(double i)
     {
         if (i < 0)
             return -1;

@@ -21,37 +21,30 @@ public class Player extends Mob
 
     public Player(double x, double y, double moveSpeed, SpriteSheet spriteSheet, KeyHandler input, Level level)
     {
-        super("Player", x, y, spriteSheet, 0, 16, 14, 16, moveSpeed, level);
+        super("Player", x, y, new Sprite(0, 16, 13, 16, spriteSheet), moveSpeed, level);
 
         this.input = input;
 
         Sprite up0 = new Sprite(0, 0, 12, 16, spriteSheet);
         Sprite up1 = new Sprite(16, 0, 12, 16, spriteSheet);
         Sprite up2 = new Sprite(32, 0, 12, 16, spriteSheet);
-
         Sprite down0 = new Sprite(0, 16, 13, 16, spriteSheet);
         Sprite down1 = new Sprite(16, 16, 13, 16, spriteSheet);
         Sprite down2 = new Sprite(32, 16, 13, 16, spriteSheet);
-
         Sprite left0 = new Sprite(0, 32, 13, 16, spriteSheet);
         Sprite left1 = new Sprite(16, 32, 13, 16, spriteSheet);
         Sprite left2 = new Sprite(32, 32, 13, 16, spriteSheet);
         Sprite left3 = new Sprite(48, 32, 13, 16, spriteSheet);
-
         Sprite right0 = new Sprite(0, 48, 14, 16, spriteSheet);
         Sprite right1 = new Sprite(16, 48, 14, 16, spriteSheet);
         Sprite right2 = new Sprite(32, 48, 14, 16, spriteSheet);
         Sprite right3 = new Sprite(48, 48, 14, 16, spriteSheet);
-
         Sprite idleUp0 = new Sprite(0, 64, 12, 16, spriteSheet);
         Sprite idleUp1 = new Sprite(16, 64, 12, 16, spriteSheet);
-
-        Sprite idleDown0 = new Sprite(0, 80, 12, 16, spriteSheet);
-        Sprite idleDown1 = new Sprite(16, 80, 12, 16, spriteSheet);
-
+        Sprite idleDown0 = new Sprite(0, 80, 13, 16, spriteSheet);
+        Sprite idleDown1 = new Sprite(16, 80, 13, 16, spriteSheet);
         Sprite idleLeft0 = new Sprite(0, 96, 13, 16, spriteSheet);
         Sprite idleLeft1 = new Sprite(16, 96, 13, 16, spriteSheet);
-
         Sprite idleRight0 = new Sprite(0, 112, 14, 16, spriteSheet);
         Sprite idleRight1 = new Sprite(16, 112, 14, 16, spriteSheet);
 
@@ -67,8 +60,12 @@ public class Player extends Mob
 
     public void tick()
     {
+        animate();
         input();
+    }
 
+    private void animate()
+    {
         switch(dir)
         {
             case 0:
@@ -149,22 +146,5 @@ public class Player extends Mob
                     break;
             }
         }
-    }
-
-    @Override
-    protected boolean collision(double xMove, double yMove)
-    {
-        for (int corner = 0; corner < 4; corner++)
-        {
-            double xTile = (x + xMove) + corner % 2 * sprite.getWidth() - 1;
-            double yTile = (y + yMove) + corner / 2 * sprite.getHeight() - 1;
-
-            if (level.getTile((int) xTile, (int) yTile).isSolid())
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

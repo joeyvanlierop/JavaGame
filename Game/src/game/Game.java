@@ -1,11 +1,11 @@
 package game;
 
 import entities.Player;
+import entities.Blob;
 import gfx.Renderer;
 import gfx.SpriteSheet;
 import input.KeyHandler;
 import level.Level;
-import tiles.Tile;
 import tiles.TileManager;
 
 import java.awt.*;
@@ -16,10 +16,11 @@ public class Game extends Canvas implements Runnable
     private static final long serialVersionUID = 1L;
 
     private static Window window;
-    public static int width = 900;
-    public static int height = 900;
+    public static int width = 600;
+    public static int height = 600;
 
     private Player player;
+    private Blob enemy;
     private Camera camera;
     private Renderer renderer;
     private TileManager tm;
@@ -39,9 +40,12 @@ public class Game extends Canvas implements Runnable
         input = new KeyHandler(this);
         tm = new TileManager(new SpriteSheet("/img/tile_sheet.png"));
         level = new Level("/levels/level_01.png", tm);
-        player = new Player(250, 250, 2, new SpriteSheet("/img/player.png"), input, level);
-        camera = new Camera(level, player,250,250);
+        player = new Player(250, 250, 1.5, new SpriteSheet("/img/player.png"), input, level);
+        enemy = new Blob("Enemy", 300, 200, 0.5, new SpriteSheet("/img/player(backup).png"), level);
+        camera = new Camera(level, player,200,200);
         renderer = new Renderer(camera);
+
+        enemy.setTarget(player);
     }
 
     public synchronized void start()
@@ -112,6 +116,7 @@ public class Game extends Canvas implements Runnable
 
         level.render(renderer, camera);
         player.render(renderer);
+        enemy.render(renderer);
 
         renderer.render(g);
 
@@ -121,6 +126,6 @@ public class Game extends Canvas implements Runnable
     public void tick()
     {
         player.tick();
-
+        enemy.tick();
     }
 }

@@ -12,9 +12,8 @@ public abstract class Entity
     protected int width;
     protected int height;
     protected Sprite sprite;
-    //protected int[] sprite;
 
-    public Entity(String name, double x, double y, SpriteSheet spriteSheet, int spriteX, int spriteY, int width, int height)
+    public Entity(String name, double x, double y, Sprite sprite)
     {
         super();
         this.name = name;
@@ -22,8 +21,7 @@ public abstract class Entity
         this.y = y;
         this.width = width;
         this.height = height;
-        this.sprite = new Sprite(spriteX, spriteY, width, height, spriteSheet);
-        //this.sprite = spriteSheet.getSprite(spriteX, spriteY, width, height);
+        this.sprite = sprite;
     }
 
     public abstract void tick();
