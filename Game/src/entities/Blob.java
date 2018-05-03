@@ -1,40 +1,33 @@
 package entities;
 
+import gfx.Sprite;
 import gfx.SpriteSheet;
 import level.Level;
 
-public class Blob extends Enemy
-{
-    public Blob(String name, double x, double y, double moveSpeed, SpriteSheet sheet, Level level)
+public class Blob extends Enemy {
+    public Blob(SpriteSheet sheet, double x, double y, double moveSpeed, Level level)
     {
-        super(name, x, y, moveSpeed, sheet, level);
+        super("Blob", new Sprite(0, 0, 32, 32, sheet), x, y, moveSpeed, level);
     }
 
     @Override
     public void target() {
-        if(target == null)
-        {
+        if (target == null) {
             return;
         }
 
         double xDir = target.getX() - x;
         double yDir = target.getY() - y;
 
-        if(Math.abs(xDir) > 4)
-        {
+        if (Math.abs(xDir) > 4) {
             xDir = abs(xDir);
-        }
-        else
-        {
+        } else {
             xDir = 0;
         }
 
-        if(Math.abs(yDir) > 4)
-        {
+        if (Math.abs(yDir) > 4) {
             yDir = abs(yDir);
-        }
-        else
-        {
+        } else {
             yDir = 0;
         }
 

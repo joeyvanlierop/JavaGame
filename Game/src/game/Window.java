@@ -3,8 +3,7 @@ package game;
 import javax.swing.*;
 import java.awt.*;
 
-public class Window
-{
+public class Window {
     private JFrame frame;
 
     public Window(int width, int height, Game main)

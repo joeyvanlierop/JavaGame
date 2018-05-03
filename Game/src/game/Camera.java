@@ -5,8 +5,7 @@ import entities.Player;
 import level.Level;
 import tiles.Tile;
 
-public class Camera
-{
+public class Camera {
     private int maxOffsetX;
     private int maxOffsetY;
     private int minOffsetX;

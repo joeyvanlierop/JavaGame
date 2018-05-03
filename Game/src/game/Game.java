@@ -1,7 +1,7 @@
 package game;
 
-import entities.Player;
 import entities.Blob;
+import entities.Player;
 import gfx.Renderer;
 import gfx.SpriteSheet;
 import input.KeyHandler;
@@ -11,8 +11,7 @@ import tiles.TileManager;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
-public class Game extends Canvas implements Runnable
-{
+public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
 
     private static Window window;
@@ -20,7 +19,7 @@ public class Game extends Canvas implements Runnable
     public static int height = 600;
 
     private Player player;
-    private Blob enemy;
+    //private Blob enemy;
     private Camera camera;
     private Renderer renderer;
     private TileManager tm;
@@ -40,18 +39,17 @@ public class Game extends Canvas implements Runnable
         input = new KeyHandler(this);
         tm = new TileManager(new SpriteSheet("/img/tile_sheet.png"));
         level = new Level("/levels/level_01.png", tm);
-        player = new Player(250, 250, 1.5, new SpriteSheet("/img/player.png"), input, level);
-        enemy = new Blob("Enemy", 300, 200, 0.5, new SpriteSheet("/img/player(backup).png"), level);
-        camera = new Camera(level, player,200,200);
+        player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, input, level);
+        //enemy = new Blob(new SpriteSheet("/img/player(backup).png"), 300, 200, 0.5, level);
+        camera = new Camera(level, player, 300, 300);
         renderer = new Renderer(camera);
 
-        enemy.setTarget(player);
+        //nemy.setTarget(player);
     }
 
     public synchronized void start()
     {
-        if (running)
-        {
+        if (running) {
             return;
         }
 
@@ -73,14 +71,12 @@ public class Game extends Canvas implements Runnable
         int frames = 0;
         int updates = 0;
 
-        while (running)
-        {
+        while (running) {
             currentTime = System.nanoTime();
             deltaTime += (currentTime - lastTime) / UPS_NS;
             lastTime = currentTime;
 
-            while (deltaTime >= 1.0)
-            {
+            while (deltaTime >= 1.0) {
                 tick();
                 updates++;
                 deltaTime -= 1.0;
@@ -89,11 +85,12 @@ public class Game extends Canvas implements Runnable
             render();
             frames++;
 
-            if (System.currentTimeMillis() - timer > 1000)
-            {
+            if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
 
                 window.setTitle(String.format("FPS: %d, UPS: %d\n", frames, updates));
+
+                System.out.println(player.getCollisionBox().getBounds2D());
 
                 frames = 0;
                 updates = 0;
@@ -105,8 +102,7 @@ public class Game extends Canvas implements Runnable
     {
         BufferStrategy bs = this.getBufferStrategy();
 
-        if (bs == null)
-        {
+        if (bs == null) {
             this.createBufferStrategy(3);
             return;
         }
@@ -116,7 +112,7 @@ public class Game extends Canvas implements Runnable
 
         level.render(renderer, camera);
         player.render(renderer);
-        enemy.render(renderer);
+        //enemy.render(renderer);
 
         renderer.render(g);
 
@@ -126,6 +122,6 @@ public class Game extends Canvas implements Runnable
     public void tick()
     {
         player.tick();
-        enemy.tick();
+        //enemy.tick();
     }
 }

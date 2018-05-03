@@ -1,7 +1,6 @@
 package gfx;
 
-public class Sprite
-{
+public class Sprite {
     private int width;
     private int height;
     private int[] pixels;

@@ -4,8 +4,7 @@ import gfx.Renderer;
 import gfx.Sprite;
 import gfx.SpriteSheet;
 
-public class Tile
-{
+public class Tile {
     public static int TILESIZE = 16;
 
     private TileType tileType;

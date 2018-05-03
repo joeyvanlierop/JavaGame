@@ -1,7 +1,6 @@
 package gfx;
 
-public class Animation
-{
+public class Animation {
     private int count = 0;
     private int index = 0;
     private int delay;
@@ -12,8 +11,7 @@ public class Animation
         this.delay = delay;
         this.sprites = new Sprite[sprites.length];
 
-        for(int i = 0; i < sprites.length; i++)
-        {
+        for (int i = 0; i < sprites.length; i++) {
             this.sprites[i] = sprites[i];
         }
     }
@@ -22,14 +20,10 @@ public class Animation
     {
         count++;
 
-        if(count > delay)
-        {
-            if(index < sprites.length - 1)
-            {
+        if (count > delay) {
+            if (index < sprites.length - 1) {
                 index++;
-            }
-            else
-            {
+            } else {
                 index = 0;
             }
 

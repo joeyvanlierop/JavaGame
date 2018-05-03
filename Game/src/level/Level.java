@@ -10,8 +10,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class Level
-{
+public class Level {
     private BufferedImage image;
     private TileManager tm;
 
@@ -21,16 +20,13 @@ public class Level
 
     public Level(String path, TileManager tm)
     {
-        try
-        {
+        try {
             image = ImageIO.read(Game.class.getResource(path));
-        } catch (IOException e)
-        {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        if (image == null)
-        {
+        if (image == null) {
             return;
         }
 
@@ -44,10 +40,8 @@ public class Level
 
     private void loadLevel(BufferedImage image)
     {
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
                 tiles[x + y * width] = tm.getTileFromColor(Integer.toHexString(image.getRGB(x, y)));
             }
         }
@@ -61,12 +55,9 @@ public class Level
         int xBoundMin = Math.max(0, camera.getX() / Tile.TILESIZE);
         int xBoundMax = Math.min(width, ((camera.getX() + camera.getViewportWidth()) / Tile.TILESIZE + 1));
 
-        for (int y = yBoundMin; y < yBoundMax; y++)
-        {
-            for (int x = xBoundMin; x < xBoundMax; x++)
-            {
-                if (tiles[x + y * width] >= 0)
-                {
+        for (int y = yBoundMin; y < yBoundMax; y++) {
+            for (int x = xBoundMin; x < xBoundMax; x++) {
+                if (tiles[x + y * width] >= 0) {
                     tm.getTile(tiles[x + y * width]).renderTile(renderer, x * 16, y * 16);
                 }
             }

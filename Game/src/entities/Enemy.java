@@ -1,16 +1,14 @@
 package entities;
 
 import gfx.Sprite;
-import gfx.SpriteSheet;
 import level.Level;
 
-public abstract class Enemy extends Mob
-{
+public abstract class Enemy extends MobileEntity {
     protected Entity target = null;
 
-    public Enemy(String name, double x, double y, double moveSpeed, SpriteSheet sheet , Level level)
+    public Enemy(String name, Sprite sprite, double x, double y, double moveSpeed, Level level)
     {
-        super(name, x, y, new Sprite(16, 0, 16, 16, sheet), moveSpeed, level);
+        super(name, sprite, x, y, moveSpeed, level);
     }
 
     public void tick()

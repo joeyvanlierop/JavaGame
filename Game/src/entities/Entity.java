@@ -2,10 +2,8 @@ package entities;
 
 import gfx.Renderer;
 import gfx.Sprite;
-import gfx.SpriteSheet;
 
-public abstract class Entity
-{
+public abstract class Entity {
     protected String name;
     protected double x;
     protected double y;
@@ -13,15 +11,13 @@ public abstract class Entity
     protected int height;
     protected Sprite sprite;
 
-    public Entity(String name, double x, double y, Sprite sprite)
+    public Entity(String name, Sprite sprite, double x, double y)
     {
         super();
         this.name = name;
+        this.sprite = sprite;
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
-        this.sprite = sprite;
     }
 
     public abstract void tick();
