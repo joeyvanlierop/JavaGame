@@ -1,12 +1,13 @@
 package entities;
 
+import entities.interfaces.CollisionInfo;
 import gfx.Animation;
 import gfx.Sprite;
 import gfx.SpriteSheet;
 import input.KeyHandler;
 import level.Level;
 
-@EntityInfo(TODO)
+//@EntityInfo(TODO)
 @CollisionInfo(collisionBoxWidth = 10, collisionBoxHeight = 10)
 public class Player extends MobileEntity {
     private KeyHandler input;

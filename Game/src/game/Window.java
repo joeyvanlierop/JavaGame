@@ -20,8 +20,7 @@ public class Window {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-
-        main.start();
+        main.uh.start();
     }
 
     public void setTitle(String title)

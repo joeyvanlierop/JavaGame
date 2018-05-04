@@ -1,15 +1,14 @@
 package entities;
 
-import gfx.Renderer;
+import entities.interfaces.IUpdatable;
+import game.RenderHandler;
 import gfx.Sprite;
 
-public abstract class Entity {
+public abstract class Entity implements IUpdatable {
     protected String name;
+    protected Sprite sprite;
     protected double x;
     protected double y;
-    protected int width;
-    protected int height;
-    protected Sprite sprite;
 
     public Entity(String name, Sprite sprite, double x, double y)
     {
@@ -22,9 +21,9 @@ public abstract class Entity {
 
     public abstract void tick();
 
-    public void render(Renderer renderer)
+    public void render(RenderHandler renderHandler)
     {
-        renderer.renderSprite(sprite, (int) x, (int) y);
+        renderHandler.renderSprite(sprite, (int) x, (int) y);
     }
 
     public double getX()

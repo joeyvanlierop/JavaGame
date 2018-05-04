@@ -1,14 +1,16 @@
 package level;
 
+import entities.Entity;
 import game.Camera;
 import game.Game;
-import gfx.Renderer;
+import game.RenderHandler;
 import tiles.Tile;
 import tiles.TileManager;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Level {
     private BufferedImage image;
@@ -17,6 +19,7 @@ public class Level {
     private int width;
     private int height;
     private int[] tiles;
+    private ArrayList<Entity> entities;
 
     public Level(String path, TileManager tm)
     {
@@ -30,6 +33,7 @@ public class Level {
             return;
         }
 
+        this.entities = new ArrayList<>();
         this.width = image.getWidth();
         this.height = image.getHeight();
         this.tiles = new int[width * height];
@@ -47,7 +51,12 @@ public class Level {
         }
     }
 
-    public void render(Renderer renderer, Camera camera)
+    public void addEntity(Entity entity)
+    {
+        entities.add(entity);
+    }
+
+    public void render(RenderHandler renderHandler, Camera camera)
     {
 
         int yBoundMin = Math.max(0, camera.getY() / Tile.TILESIZE);
@@ -58,9 +67,14 @@ public class Level {
         for (int y = yBoundMin; y < yBoundMax; y++) {
             for (int x = xBoundMin; x < xBoundMax; x++) {
                 if (tiles[x + y * width] >= 0) {
-                    tm.getTile(tiles[x + y * width]).renderTile(renderer, x * 16, y * 16);
+                    tm.getTile(tiles[x + y * width]).renderTile(renderHandler, x * 16, y * 16);
                 }
             }
+        }
+
+        for(Entity entity : entities)
+        {
+            entity.render(renderHandler);
         }
     }
 

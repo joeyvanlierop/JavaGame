@@ -1,11 +1,11 @@
 package entities;
 
+import entities.interfaces.CollisionInfo;
 import gfx.Sprite;
 
 import java.awt.geom.Rectangle2D;
 
-public abstract class CollisionEntity extends Entity
-{
+public abstract class CollisionEntity extends Entity {
     private int collisionBoxWidth;
     private int collisionBoxHeight;
 

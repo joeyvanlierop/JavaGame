@@ -1,4 +1,4 @@
-package entities;
+package entities.interfaces;
 
 import java.lang.annotation.*;
 
@@ -6,8 +6,8 @@ import java.lang.annotation.*;
 @Inherited
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CollisionInfo
-{
+public @interface CollisionInfo {
     int collisionBoxWidth();
+
     int collisionBoxHeight();
 }

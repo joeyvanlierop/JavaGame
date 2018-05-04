@@ -1,20 +1,20 @@
-package gfx;
+package game;
 
-import game.Camera;
-import game.Game;
+import gfx.Sprite;
 
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
-public class Renderer {
-    private int[] pixels;
-
+public class RenderHandler extends Canvas
+{
     private Camera camera;
 
+    private int[] pixels;
     private BufferedImage view;
 
-    public Renderer(Camera player)
+    public RenderHandler(Camera player)
     {
         this.camera = player;
 
@@ -30,8 +30,18 @@ public class Renderer {
     }
 
     //TODO: Improve Scaling
-    public void render(Graphics g)
+    public void render()
     {
+        BufferStrategy bs = this.getBufferStrategy();
+
+        if (bs == null) {
+            this.createBufferStrategy(3);
+            return;
+        }
+
+        Graphics g = bs.getDrawGraphics();
+        clearScreen(0x0000ccff);
+
         int scale;
 
         if (Game.width > Game.height) {
@@ -41,7 +51,9 @@ public class Renderer {
         }
 
         g.drawImage(view, 0, 0, camera.getViewportWidth() + scale, camera.getViewportHeight() + scale, null);
+
         g.dispose();
+        bs.show();
     }
 
     public void renderPixel(int x, int y, int color)

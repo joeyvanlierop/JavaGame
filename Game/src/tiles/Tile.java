@@ -1,6 +1,6 @@
 package tiles;
 
-import gfx.Renderer;
+import game.RenderHandler;
 import gfx.Sprite;
 import gfx.SpriteSheet;
 
@@ -16,9 +16,9 @@ public class Tile {
         this.sprite = new Sprite(tileType.x * TILESIZE, tileType.y * TILESIZE, TILESIZE, TILESIZE, spriteSheet);
     }
 
-    public void renderTile(Renderer renderer, int xPosition, int yPosition)
+    public void renderTile(RenderHandler renderHandler, int xPosition, int yPosition)
     {
-        renderer.renderSprite(sprite, xPosition, yPosition);
+        renderHandler.renderSprite(sprite, xPosition, yPosition);
     }
 
     public boolean isSolid()
