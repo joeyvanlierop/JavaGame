@@ -43,11 +43,11 @@ public class Renderer extends Canvas {
 
         int scale;
 
-        if (Game.width > Game.height)
+        if (GameManager.width > GameManager.height)
         {
-            scale = Game.width - camera.getViewportWidth();
+            scale = GameManager.width - camera.getViewportWidth();
         } else {
-            scale = Game.height - camera.getViewportWidth();
+            scale = GameManager.height - camera.getViewportWidth();
         }
 
         g.drawImage(view, 0, 0, camera.getViewportWidth() + scale, camera.getViewportHeight() + scale, null);

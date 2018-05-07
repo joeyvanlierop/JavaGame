@@ -4,7 +4,7 @@ import entities.Entity;
 import entities.interfaces.IRenderable;
 import entities.interfaces.IUpdatable;
 import game.Camera;
-import game.Game;
+import game.GameManager;
 import game.Renderer;
 import tiles.Tile;
 import tiles.TileManager;
@@ -27,7 +27,7 @@ public class Level implements IUpdatable, IRenderable {
     public Level(String path, TileManager tm, Camera camera)
     {
         try {
-            image = ImageIO.read(Game.class.getResource(path));
+            image = ImageIO.read(GameManager.class.getResource(path));
         } catch (IOException e) {
             e.printStackTrace();
         }

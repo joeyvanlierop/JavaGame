@@ -1,5 +1,6 @@
-import entities.Player;
+import game.GameManager;
 
-public class Game {
-    private Player level;
+public class Game extends GameManager
+{
+    //private Player level;
 }

@@ -1,6 +1,6 @@
 package gfx;
 
-import game.Game;
+import game.GameManager;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -17,7 +17,7 @@ public class SpriteSheet {
     public SpriteSheet(String path)
     {
         try {
-            this.image = ImageIO.read(Game.class.getResource(path));
+            this.image = ImageIO.read(GameManager.class.getResource(path));
         } catch (IOException e) {
             e.printStackTrace();
         }

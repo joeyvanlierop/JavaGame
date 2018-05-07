@@ -1,9 +1,11 @@
 package entities;
 
+import entities.interfaces.CollisionInfo;
 import gfx.Sprite;
 import gfx.SpriteSheet;
 import level.Level;
 
+@CollisionInfo(collisionBoxWidth = 10, collisionBoxHeight = 10)
 public class Blob extends Enemy {
     public Blob(SpriteSheet sheet, double x, double y, double moveSpeed, Level level)
     {
