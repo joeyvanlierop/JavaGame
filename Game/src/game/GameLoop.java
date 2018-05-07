@@ -1,27 +1,19 @@
 package game;
 
-import entities.interfaces.IUpdatable;
+public class GameLoop implements Runnable {
 
-import java.util.ArrayList;
-
-public class UpdateHandler implements Runnable {
-    private ArrayList<IUpdatable> updatables;
+    private double UPS;
     private boolean running = false;
     private Thread thread;
 
-    private double UPS;
-    private Game game;
+    private UpdateLoop updateLoop;
+    private RenderLoop renderLoop;
 
-    public UpdateHandler(double UPS, Game game)
+    public GameLoop(double UPS, UpdateLoop updateLoop, RenderLoop renderLoop)
     {
-        this.updatables = new ArrayList<>();
         this.UPS = UPS;
-        this.game = game;
-    }
-
-    public void addUpdatable(IUpdatable updatable)
-    {
-        updatables.add(updatable);
+        this.updateLoop = updateLoop;
+        this.renderLoop = renderLoop;
     }
 
     public synchronized void start()
@@ -64,29 +56,22 @@ public class UpdateHandler implements Runnable {
             lastTime = currentTime;
 
             while (deltaTime >= 1.0) {
-                tick();
+                updateLoop.tick();
                 updates++;
                 deltaTime -= 1.0;
             }
 
-            game.render();
+            renderLoop.render();
             frames++;
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
 
-                System.out.println(String.format("FPS: %d, UPS: %d\n", frames, updates));
+                System.out.printf("FPS: %d, UPS: %d\n", frames, updates);
 
                 frames = 0;
                 updates = 0;
             }
-        }
-    }
-
-    private void tick()
-    {
-        for (IUpdatable updatable : updatables) {
-            updatable.tick();
         }
     }
 }

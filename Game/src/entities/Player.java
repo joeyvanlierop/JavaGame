@@ -1,6 +1,7 @@
 package entities;
 
 import entities.interfaces.CollisionInfo;
+import game.Game;
 import gfx.Animation;
 import gfx.Sprite;
 import gfx.SpriteSheet;

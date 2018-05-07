@@ -7,14 +7,13 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
-public class RenderHandler extends Canvas
-{
+public class Renderer extends Canvas {
     private Camera camera;
 
     private int[] pixels;
     private BufferedImage view;
 
-    public RenderHandler(Camera player)
+    public Renderer(Camera player)
     {
         this.camera = player;
 
@@ -24,7 +23,8 @@ public class RenderHandler extends Canvas
 
     public void clearScreen(int color)
     {
-        for (int pixelIndex = 0; pixelIndex < pixels.length; pixelIndex++) {
+        for (int pixelIndex = 0; pixelIndex < pixels.length; pixelIndex++)
+        {
             pixels[pixelIndex] = color;
         }
     }
@@ -40,11 +40,11 @@ public class RenderHandler extends Canvas
         }
 
         Graphics g = bs.getDrawGraphics();
-        clearScreen(0x0000ccff);
 
         int scale;
 
-        if (Game.width > Game.height) {
+        if (Game.width > Game.height)
+        {
             scale = Game.width - camera.getViewportWidth();
         } else {
             scale = Game.height - camera.getViewportWidth();
@@ -54,6 +54,8 @@ public class RenderHandler extends Canvas
 
         g.dispose();
         bs.show();
+
+        clearScreen(0xffffffff);
     }
 
     public void renderPixel(int x, int y, int color)

@@ -1,6 +1,5 @@
 import entities.Player;
 
-public class Game
-{
+public class Game {
     private Player level;
 }

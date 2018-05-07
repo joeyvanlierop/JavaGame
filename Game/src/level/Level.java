@@ -1,9 +1,11 @@
 package level;
 
 import entities.Entity;
+import entities.interfaces.IRenderable;
+import entities.interfaces.IUpdatable;
 import game.Camera;
 import game.Game;
-import game.RenderHandler;
+import game.Renderer;
 import tiles.Tile;
 import tiles.TileManager;
 
@@ -12,16 +14,17 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Level {
+public class Level implements IUpdatable, IRenderable {
     private BufferedImage image;
     private TileManager tm;
+    private Camera camera;
 
     private int width;
     private int height;
     private int[] tiles;
     private ArrayList<Entity> entities;
 
-    public Level(String path, TileManager tm)
+    public Level(String path, TileManager tm, Camera camera)
     {
         try {
             image = ImageIO.read(Game.class.getResource(path));
@@ -33,11 +36,12 @@ public class Level {
             return;
         }
 
+        this.tm = tm;
+        this.camera = camera;
         this.entities = new ArrayList<>();
         this.width = image.getWidth();
         this.height = image.getHeight();
         this.tiles = new int[width * height];
-        this.tm = tm;
 
         this.loadLevel(image);
     }
@@ -56,9 +60,16 @@ public class Level {
         entities.add(entity);
     }
 
-    public void render(RenderHandler renderHandler, Camera camera)
+    public void tick()
     {
+        for(Entity entity : entities)
+        {
+            entity.tick();
+        }
+    }
 
+    public void render(Renderer renderer)
+    {
         int yBoundMin = Math.max(0, camera.getY() / Tile.TILESIZE);
         int yBoundMax = Math.min(height, ((camera.getY() + camera.getViewportHeight()) / Tile.TILESIZE + 1));
         int xBoundMin = Math.max(0, camera.getX() / Tile.TILESIZE);
@@ -67,14 +78,14 @@ public class Level {
         for (int y = yBoundMin; y < yBoundMax; y++) {
             for (int x = xBoundMin; x < xBoundMax; x++) {
                 if (tiles[x + y * width] >= 0) {
-                    tm.getTile(tiles[x + y * width]).renderTile(renderHandler, x * 16, y * 16);
+                    tm.getTile(tiles[x + y * width]).renderTile(renderer, x * 16, y * 16);
                 }
             }
         }
 
         for(Entity entity : entities)
         {
-            entity.render(renderHandler);
+            entity.render(renderer);
         }
     }
 

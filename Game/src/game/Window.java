@@ -6,21 +6,22 @@ import java.awt.*;
 public class Window {
     private JFrame frame;
 
-    public Window(int width, int height, Game main)
+    public Window(int width, int height, Game game)
     {
         frame = new JFrame("Game");
 
-        main.setPreferredSize(new Dimension(width, height));
-        main.setMaximumSize(new Dimension(width, height));
-        main.setMinimumSize(new Dimension(width, height));
+        game.renderer.setPreferredSize(new Dimension(width, height));
+        game.renderer.setMaximumSize(new Dimension(width, height));
+        game.renderer.setMinimumSize(new Dimension(width, height));
 
-        frame.add(main);
+        frame.add(game.renderer);
         frame.setResizable(false);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        main.uh.start();
+
+        game.start();
     }
 
     public void setTitle(String title)

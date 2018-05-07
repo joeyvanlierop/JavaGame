@@ -14,14 +14,19 @@ public class Camera {
     private int viewportHeight;
     private Entity target;
 
-    public Camera(Level level, Player target, int viewportWidth, int viewportHeight)
+    public Camera(int viewportWidth, int viewportHeight)
     {
-        this.maxOffsetX = level.getWidth() * Tile.TILESIZE - viewportWidth;
-        this.maxOffsetY = level.getWidth() * Tile.TILESIZE - viewportHeight;
-        this.minOffsetX = 0;
-        this.minOffsetY = 0;
         this.viewportWidth = viewportWidth;
         this.viewportHeight = viewportHeight;
+    }
+
+    public void init(Entity target, Level level)
+    {
+        this.maxOffsetX = level.getWidth() * Tile.TILESIZE - viewportWidth;
+        this.maxOffsetY = level.getHeight() * Tile.TILESIZE - viewportHeight;
+        this.minOffsetX = 0;
+        this.minOffsetY = 0;
+
         this.target = target;
     }
 

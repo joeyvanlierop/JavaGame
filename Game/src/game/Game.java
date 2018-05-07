@@ -6,9 +6,6 @@ import input.KeyHandler;
 import level.Level;
 import tiles.TileManager;
 
-import java.awt.*;
-import java.awt.image.BufferStrategy;
-
 public class Game {
     private static final long serialVersionUID = 1L;
 
@@ -19,11 +16,13 @@ public class Game {
     private Player player;
     //private Blob enemy;
     private Camera camera;
-    private RenderHandler renderHandler;
+    public Renderer renderer;
     private TileManager tm;
     private KeyHandler input;
     private Level level;
-    public UpdateHandler uh;
+    private UpdateLoop updateLoop;
+    private RenderLoop renderLoop;
+    public GameLoop gameLoop;
 
     public static void main(String[] args)
     {
@@ -32,17 +31,29 @@ public class Game {
 
     public Game()
     {
-        input = new KeyHandler(this);
-        tm = new TileManager(new SpriteSheet("/img/tile_sheet.png"));
-        level = new Level("/levels/level_01.png", tm);
-        player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, input, level);
         //enemy = new Blob(new SpriteSheet("/img/player(backup).png"), 300, 200, 0.5, level);
-        camera = new Camera(level, player, 300, 300);
-        renderHandler = new RenderHandler(camera);
-        uh = new UpdateHandler(60, this);
-        uh.addUpdatable(player);
-        level.addEntity(player);
 
+        tm = new TileManager(new SpriteSheet("/img/tile_sheet.png"));
+        camera = new Camera(300, 300);
+        level = new Level("/levels/level_01.png", tm, camera);
+        renderer = new Renderer(camera);
+        input = new KeyHandler(renderer);
+        player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, input, level);
+
+        updateLoop = new UpdateLoop();
+        renderLoop = new RenderLoop(renderer);
+        gameLoop = new GameLoop(60, updateLoop, renderLoop);
+
+        level.addEntity(player);
+        camera.init(player, level);
+
+        updateLoop.addUpdatable(level);
+        renderLoop.addRenderable(level);
         //enemy.setTarget(player);
+    }
+
+    public void start()
+    {
+        gameLoop.start();
     }
 }

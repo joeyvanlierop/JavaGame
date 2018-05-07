@@ -1,6 +1,6 @@
 package input;
 
-import game.Game;
+import game.Renderer;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -20,9 +20,9 @@ public class KeyHandler extends KeyAdapter {
         }
     }
 
-    public KeyHandler(Game game)
+    public KeyHandler(Renderer renderer)
     {
-        game.addKeyListener(this);
+        renderer.addKeyListener(this);
     }
 
     public Key up = new Key();
