@@ -1,4 +1,4 @@
-package game;
+package gfx;
 
 import javax.swing.*;
 import java.awt.*;

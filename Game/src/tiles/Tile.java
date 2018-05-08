@@ -1,6 +1,6 @@
 package tiles;
 
-import game.Renderer;
+import gfx.Renderer;
 import gfx.Sprite;
 import gfx.SpriteSheet;
 

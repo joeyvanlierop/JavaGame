@@ -1,8 +1,8 @@
 package entities;
 
-import entities.interfaces.IRenderable;
-import entities.interfaces.IUpdatable;
-import game.Renderer;
+import interfaces.IRenderable;
+import interfaces.IUpdatable;
+import gfx.Renderer;
 import gfx.Sprite;
 
 public abstract class Entity implements IUpdatable, IRenderable {

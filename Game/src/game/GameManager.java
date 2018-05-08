@@ -1,58 +1,70 @@
 package game;
 
-import entities.Blob;
-import entities.Player;
+import gfx.Renderer;
 import gfx.SpriteSheet;
-import input.KeyHandler;
-import level.Level;
+import gfx.Window;
+import input.InputHandler;
+import states.State;
 import tiles.TileManager;
 
-public class GameManager {
-    private static final long serialVersionUID = 1L;
+public final class GameManager
+{
+    public static int width;
+    public static int height;
 
     private static Window window;
-    public static int width = 600;
-    public static int height = 600;
+    private static Camera camera;
+    private static Renderer renderer;
+    private static InputHandler input;
+    private static State state;
 
-    private Player player;
-    private Blob enemy;
-    private Camera camera;
-    public Renderer renderer;
-    private TileManager tm;
-    private KeyHandler input;
-    private Level level;
-    private UpdateLoop updateLoop;
-    private RenderLoop renderLoop;
-    public GameLoop gameLoop;
+    public static GameLoop gameLoop;
+    private static UpdateLoop updateLoop;
+    private static RenderLoop renderLoop;
 
-    public static void main(String[] args)
+    public static void init(int width, int height, Camera camera, String... paths)
     {
-        new GameManager();
-    }
+        GameManager.width = width;
+        GameManager.height = height;
+        GameManager.camera = camera;
 
-    public GameManager()
-    {
-        camera = new Camera(300, 300);
-        tm = new TileManager(new SpriteSheet("/img/tile_sheet.png"));
-        level = new Level("/levels/level_01.png", tm, camera);
+        for (String path : paths) {
+            TileManager.loadTiles(new SpriteSheet(path));
+        }
+
         renderer = new Renderer(camera);
-        window = new Window(width, height, renderer);
-        input = new KeyHandler(renderer);
-        player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, input, level);
-        enemy = new Blob(new SpriteSheet("/img/player(backup).png"), 300, 200, 0.5, level);
-        enemy.setTarget(player);
-
+        input = new InputHandler(renderer);
         updateLoop = new UpdateLoop();
         renderLoop = new RenderLoop(renderer);
         gameLoop = new GameLoop(60, updateLoop, renderLoop);
+    }
 
-        level.addEntity(player);
-        level.addEntity(enemy);
-        camera.init(player, level);
+    public static void start(State state)
+    {
+        GameManager.state = state;
 
-        updateLoop.addUpdatable(level);
-        renderLoop.addRenderable(level);
+
+        //Player player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, input, level);
+        //enemy = new Blob(new SpriteSheet("/img/player(backup).png"), 300, 200, 0.5, level);
+        //enemy.setTarget(player);
+        window = new Window(width, height, renderer);
+        //level.addEntity(player);
+        //level.addEntity(enemy);
+        //camera.init(player, level);
+
+        updateLoop.addUpdatable(state);
+        renderLoop.addRenderable(state);
 
         gameLoop.start();
+    }
+
+    public static Camera getCamera()
+    {
+        return camera;
+    }
+
+    public static InputHandler getInput()
+    {
+        return input;
     }
 }

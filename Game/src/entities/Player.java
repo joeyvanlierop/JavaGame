@@ -1,16 +1,16 @@
 package entities;
 
-import entities.interfaces.CollisionInfo;
+import interfaces.CollisionInfo;
 import gfx.Animation;
 import gfx.Sprite;
 import gfx.SpriteSheet;
-import input.KeyHandler;
+import input.InputHandler;
 import level.Level;
 
 //@EntityInfo(TODO)
 @CollisionInfo(collisionBoxWidth = 10, collisionBoxHeight = 10)
 public class Player extends MobileEntity {
-    private KeyHandler input;
+    private InputHandler input;
 
     private Animation idleUp;
     private Animation idleDown;
@@ -21,7 +21,7 @@ public class Player extends MobileEntity {
     private Animation moveLeft;
     private Animation moveRight;
 
-    public Player(SpriteSheet spriteSheet, double x, double y, double moveSpeed, KeyHandler input, Level level)
+    public Player(SpriteSheet spriteSheet, double x, double y, double moveSpeed, InputHandler input, Level level)
     {
         super("Player", new Sprite(0, 16, 13, 16, spriteSheet), x, y, moveSpeed, level);
 

@@ -1,4 +1,4 @@
-package entities.interfaces;
+package interfaces;
 
 import java.lang.annotation.*;
 

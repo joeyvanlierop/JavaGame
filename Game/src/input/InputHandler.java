@@ -1,11 +1,11 @@
 package input;
 
-import game.Renderer;
+import gfx.Renderer;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class KeyHandler extends KeyAdapter {
+public class InputHandler extends KeyAdapter {
     public class Key {
         private boolean pressed = false;
 
@@ -20,7 +20,7 @@ public class KeyHandler extends KeyAdapter {
         }
     }
 
-    public KeyHandler(Renderer renderer)
+    public InputHandler(Renderer renderer)
     {
         renderer.addKeyListener(this);
     }

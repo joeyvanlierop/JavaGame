@@ -1,6 +1,6 @@
 package entities;
 
-import entities.interfaces.CollisionInfo;
+import interfaces.CollisionInfo;
 import gfx.Sprite;
 import gfx.SpriteSheet;
 import level.Level;

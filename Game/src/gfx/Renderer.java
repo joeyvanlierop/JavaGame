@@ -1,6 +1,7 @@
-package game;
+package gfx;
 
-import gfx.Sprite;
+import game.Camera;
+import game.GameManager;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -23,8 +24,7 @@ public class Renderer extends Canvas {
 
     public void clearScreen(int color)
     {
-        for (int pixelIndex = 0; pixelIndex < pixels.length; pixelIndex++)
-        {
+        for (int pixelIndex = 0; pixelIndex < pixels.length; pixelIndex++) {
             pixels[pixelIndex] = color;
         }
     }
@@ -43,8 +43,7 @@ public class Renderer extends Canvas {
 
         int scale;
 
-        if (GameManager.width > GameManager.height)
-        {
+        if (GameManager.width > GameManager.height) {
             scale = GameManager.width - camera.getViewportWidth();
         } else {
             scale = GameManager.height - camera.getViewportWidth();

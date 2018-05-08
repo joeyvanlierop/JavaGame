@@ -1,6 +1,6 @@
 package game;
 
-import entities.interfaces.IUpdatable;
+import interfaces.IUpdatable;
 
 import java.util.ArrayList;
 

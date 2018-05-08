@@ -1,11 +1,11 @@
 package level;
 
 import entities.Entity;
-import entities.interfaces.IRenderable;
-import entities.interfaces.IUpdatable;
+import interfaces.IRenderable;
+import interfaces.IUpdatable;
 import game.Camera;
 import game.GameManager;
-import game.Renderer;
+import gfx.Renderer;
 import tiles.Tile;
 import tiles.TileManager;
 
@@ -14,9 +14,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Level implements IUpdatable, IRenderable {
+public class Level implements IUpdatable, IRenderable
+{
     private BufferedImage image;
-    private TileManager tm;
     private Camera camera;
 
     private int width;
@@ -24,7 +24,7 @@ public class Level implements IUpdatable, IRenderable {
     private int[] tiles;
     private ArrayList<Entity> entities;
 
-    public Level(String path, TileManager tm, Camera camera)
+    public Level(String path)
     {
         try {
             image = ImageIO.read(GameManager.class.getResource(path));
@@ -36,8 +36,7 @@ public class Level implements IUpdatable, IRenderable {
             return;
         }
 
-        this.tm = tm;
-        this.camera = camera;
+        this.camera = GameManager.getCamera();
         this.entities = new ArrayList<>();
         this.width = image.getWidth();
         this.height = image.getHeight();
@@ -50,7 +49,7 @@ public class Level implements IUpdatable, IRenderable {
     {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                tiles[x + y * width] = tm.getTileFromColor(Integer.toHexString(image.getRGB(x, y)));
+                tiles[x + y * width] = TileManager.getTileFromColor(Integer.toHexString(image.getRGB(x, y)));
             }
         }
     }
@@ -62,7 +61,7 @@ public class Level implements IUpdatable, IRenderable {
 
     public void tick()
     {
-        for(Entity entity : entities)
+        for (Entity entity : entities)
         {
             entity.tick();
         }
@@ -78,12 +77,12 @@ public class Level implements IUpdatable, IRenderable {
         for (int y = yBoundMin; y < yBoundMax; y++) {
             for (int x = xBoundMin; x < xBoundMax; x++) {
                 if (tiles[x + y * width] >= 0) {
-                    tm.getTile(tiles[x + y * width]).renderTile(renderer, x * 16, y * 16);
+                    TileManager.getTile(tiles[x + y * width]).renderTile(renderer, x * 16, y * 16);
                 }
             }
         }
 
-        for(Entity entity : entities)
+        for (Entity entity : entities)
         {
             entity.render(renderer);
         }
@@ -94,7 +93,7 @@ public class Level implements IUpdatable, IRenderable {
         x /= Tile.TILESIZE;
         y /= Tile.TILESIZE;
 
-        return tm.getTile(tiles[x + y * width]);
+        return TileManager.getTile(tiles[x + y * width]);
     }
 
     public int getWidth()

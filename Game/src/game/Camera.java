@@ -1,7 +1,6 @@
 package game;
 
 import entities.Entity;
-import entities.Player;
 import level.Level;
 import tiles.Tile;
 

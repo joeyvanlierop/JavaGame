@@ -1,6 +1,6 @@
-package entities.interfaces;
+package interfaces;
 
-import game.Renderer;
+import gfx.Renderer;
 
 public interface IRenderable {
     void render(Renderer renderer);
