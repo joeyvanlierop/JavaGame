@@ -9,6 +9,8 @@ import tiles.TileManager;
 
 public final class GameManager
 {
+    private static GameConfiguration gameConfiguration = new GameConfiguration();;
+
     public static int width;
     public static int height;
 
@@ -22,40 +24,39 @@ public final class GameManager
     private static UpdateLoop updateLoop;
     private static RenderLoop renderLoop;
 
-    public static void init(int width, int height, Camera camera, String... paths)
+    public static void init(String... paths)
     {
-        GameManager.width = width;
-        GameManager.height = height;
-        GameManager.camera = camera;
+        GameManager.width = gameConfiguration.getWidth();
+        GameManager.height = gameConfiguration.getHeight();
 
-        for (String path : paths) {
+        for (String path : paths)
+        {
             TileManager.loadTiles(new SpriteSheet(path));
         }
 
+        camera = new Camera(width / gameConfiguration.getRenderScale(), height / gameConfiguration.getRenderScale());
         renderer = new Renderer(camera);
         input = new InputHandler(renderer);
         updateLoop = new UpdateLoop();
         renderLoop = new RenderLoop(renderer);
-        gameLoop = new GameLoop(60, updateLoop, renderLoop);
+        gameLoop = new GameLoop(gameConfiguration.getUPS(), updateLoop, renderLoop);
     }
 
     public static void start(State state)
     {
         GameManager.state = state;
+        window = new Window(width, height, renderer);
 
-
+        updateLoop.addUpdatable(state);
+        renderLoop.addRenderable(state);
+        gameLoop.start();
         //Player player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, input, level);
         //enemy = new Blob(new SpriteSheet("/img/player(backup).png"), 300, 200, 0.5, level);
         //enemy.setTarget(player);
-        window = new Window(width, height, renderer);
         //level.addEntity(player);
         //level.addEntity(enemy);
         //camera.init(player, level);
 
-        updateLoop.addUpdatable(state);
-        renderLoop.addRenderable(state);
-
-        gameLoop.start();
     }
 
     public static Camera getCamera()
@@ -66,5 +67,20 @@ public final class GameManager
     public static InputHandler getInput()
     {
         return input;
+    }
+
+    public static GameConfiguration getConfiguration()
+    {
+        return gameConfiguration;
+    }
+
+    public static void loadState(State state)
+    {
+        if(state != null)
+        {
+            //TODO
+        }
+
+        GameManager.state = state;
     }
 }

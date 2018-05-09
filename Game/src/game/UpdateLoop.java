@@ -4,7 +4,8 @@ import interfaces.IUpdatable;
 
 import java.util.ArrayList;
 
-public class UpdateLoop {
+public class UpdateLoop
+{
     private ArrayList<IUpdatable> updatables;
 
     public UpdateLoop()
