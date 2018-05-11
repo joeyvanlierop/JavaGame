@@ -31,7 +31,7 @@ public class Camera {
 
     public int getX()
     {
-        int camX = (int) target.getX() - viewportWidth / 2;
+        int camX = (int) target.getX() + (target.getWidth() / 2) - (viewportWidth / 2);
 
         if (camX > maxOffsetX)
             return maxOffsetX;
@@ -44,7 +44,7 @@ public class Camera {
 
     public int getY()
     {
-        int camY = (int) target.getY() - viewportHeight / 2;
+        int camY = (int) target.getY() + (target.getHeight() / 2) - (viewportHeight / 2);
 
         if (camY > maxOffsetY)
             return maxOffsetY;

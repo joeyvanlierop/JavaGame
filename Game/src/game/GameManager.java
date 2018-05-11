@@ -7,12 +7,9 @@ import input.InputHandler;
 import states.State;
 import tiles.TileManager;
 
-public final class GameManager
+public abstract class GameManager
 {
-    private static GameConfiguration gameConfiguration = new GameConfiguration();;
-
-    public static int width;
-    public static int height;
+    private static GameConfiguration gameConfiguration = new GameConfiguration();
 
     private static Window window;
     private static Camera camera;
@@ -26,15 +23,16 @@ public final class GameManager
 
     public static void init(String... paths)
     {
-        GameManager.width = gameConfiguration.getWidth();
-        GameManager.height = gameConfiguration.getHeight();
+        //GameManager.width = gameConfiguration.getWidth();
+        //GameManager.height = gameConfiguration.getHeight();
 
         for (String path : paths)
         {
             TileManager.loadTiles(new SpriteSheet(path));
         }
 
-        camera = new Camera(width / gameConfiguration.getRenderScale(), height / gameConfiguration.getRenderScale());
+        camera = new Camera(gameConfiguration.getWidth() / gameConfiguration.getRenderScale(),
+                            gameConfiguration.getHeight() / gameConfiguration.getRenderScale());
         renderer = new Renderer(camera);
         input = new InputHandler(renderer);
         updateLoop = new UpdateLoop();
@@ -45,7 +43,7 @@ public final class GameManager
     public static void start(State state)
     {
         GameManager.state = state;
-        window = new Window(width, height, renderer);
+        window = new Window(getConfiguration().getWidth(), gameConfiguration.getHeight(), renderer);
 
         updateLoop.addUpdatable(state);
         renderLoop.addRenderable(state);
@@ -56,7 +54,6 @@ public final class GameManager
         //level.addEntity(player);
         //level.addEntity(enemy);
         //camera.init(player, level);
-
     }
 
     public static Camera getCamera()

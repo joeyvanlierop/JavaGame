@@ -46,4 +46,14 @@ public abstract class Entity implements IUpdatable, IRenderable {
     {
         this.y = y;
     }
+
+    public int getWidth()
+    {
+        return sprite.getWidth();
+    }
+
+    public int getHeight()
+    {
+        return sprite.getHeight();
+    }
 }

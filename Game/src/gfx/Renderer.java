@@ -4,6 +4,7 @@ import game.Camera;
 import game.GameManager;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -29,7 +30,6 @@ public class Renderer extends Canvas {
         }
     }
 
-    //TODO: Improve Scaling
     public void render()
     {
         BufferStrategy bs = this.getBufferStrategy();
@@ -39,17 +39,13 @@ public class Renderer extends Canvas {
             return;
         }
 
-        Graphics g = bs.getDrawGraphics();
+        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+        AffineTransform t = new AffineTransform();
 
-        int scale;
+        t.scale(GameManager.getConfiguration().getRenderScale(), GameManager.getConfiguration().getRenderScale());
+        g.setTransform(t);
 
-        if (GameManager.width > GameManager.height) {
-            scale = GameManager.width - camera.getViewportWidth();
-        } else {
-            scale = GameManager.height - camera.getViewportWidth();
-        }
-
-        g.drawImage(view, 0, 0, camera.getViewportWidth() + scale, camera.getViewportHeight() + scale, null);
+        g.drawImage(view, 0, 0,null);
 
         g.dispose();
         bs.show();

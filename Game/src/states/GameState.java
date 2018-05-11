@@ -1,6 +1,6 @@
 package states;
 
-import entities.Player;
+import entities.Entity;
 import game.Camera;
 import gfx.Renderer;
 import level.Level;
@@ -9,9 +9,9 @@ public class GameState extends State
 {
     private Level level;
     private Camera camera;
-    private Player player;
+    private Entity player;
 
-    public GameState(Level level, Camera camera, Player player)
+    public GameState(Level level, Camera camera, Entity player)
     {
         this.camera = camera;
         this.player = player;
