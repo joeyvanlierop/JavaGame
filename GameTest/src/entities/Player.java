@@ -1,5 +1,6 @@
 package entities;
 
+import input.Controls;
 import interfaces.CollisionInfo;
 import gfx.Animation;
 import gfx.Sprite;
@@ -101,22 +102,30 @@ public class Player extends MobileEntity {
         double xMove = 0;
         double yMove = 0;
 
-        if (input.up.isPressed()) {
+        //if (input.up.isPressed()) {
+        if(input.getKey(Controls.UP.getKeyCode()))
+        {
             yMove -= moveSpeed;
             dir = 0;
         }
 
-        if (input.down.isPressed()) {
+        //if (input.down.isPressed()) {
+        if(input.getKey(Controls.DOWN.getKeyCode()))
+        {
             yMove += moveSpeed;
             dir = 1;
         }
 
-        if (input.left.isPressed()) {
+        //if (input.left.isPressed()) {
+        if(input.getKey(Controls.LEFT.getKeyCode()))
+        {
             xMove -= moveSpeed;
             dir = 2;
         }
 
-        if (input.right.isPressed()) {
+        //if (input.right.isPressed()) {
+        if(input.getKey(Controls.RIGHT.getKeyCode()))
+        {
             xMove += moveSpeed;
             dir = 3;
         }

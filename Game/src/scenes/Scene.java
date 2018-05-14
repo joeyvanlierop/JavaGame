@@ -1,10 +1,10 @@
-package states;
+package scenes;
 
 import gfx.Renderer;
 import interfaces.IRenderable;
 import interfaces.IUpdatable;
 
-public abstract class State implements IUpdatable, IRenderable
+public abstract class Scene implements IUpdatable, IRenderable
 {
     public abstract void tick();
 

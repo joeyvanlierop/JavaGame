@@ -2,10 +2,10 @@ package tiles;
 
 public enum TileType {
 
-    Grass(0, 0, "ff00ff00", false),
-    Dirt(6, 2, "ffb97a57", false),
-    Water(10, 0, "ff0000ff", false),
-    Stone(9, 0, "ff000000", true);
+    GRASS(0, 0, "ff00ff00", false),
+    DIRT(6, 2, "ffb97a57", false),
+    WATER(10, 0, "ff0000ff", false),
+    STONE(9, 0, "ff000000", true);
 
     public final int ID;
     public final int x;

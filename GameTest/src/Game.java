@@ -2,8 +2,8 @@ import entities.Player;
 import game.GameManager;
 import gfx.SpriteSheet;
 import level.Level;
-import states.GameState;
-import states.State;
+import scenes.GameScene;
+import scenes.Scene;
 
 public class Game extends GameManager
 {
@@ -12,15 +12,15 @@ public class Game extends GameManager
         getConfiguration().setName("Test");
         getConfiguration().setWidth(600);
         getConfiguration().setHeight(600);
-        getConfiguration().setRenderScale(1);
+        getConfiguration().setRenderScale(2);
         getConfiguration().setUPS(60);
 
         init("/img/tile_sheet.png");
 
         Level level_01 = new Level("/levels/level_01.png");
-        Player player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, GameManager.getInput(), level_01);
-        State state_01 = new GameState(level_01, GameManager.getCamera(), player);
+        Player player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, GameManager.getInputHandler(), level_01);
+        Scene scene_01 = new GameScene(level_01, GameManager.getCamera(), player);
 
-        start(state_01);
+        start(scene_01);
     }
 }

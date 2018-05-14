@@ -4,7 +4,8 @@ import gfx.Renderer;
 import gfx.SpriteSheet;
 import gfx.Window;
 import input.InputHandler;
-import states.State;
+import scenes.Scene;
+import scenes.SceneManager;
 import tiles.TileManager;
 
 public abstract class GameManager
@@ -14,8 +15,8 @@ public abstract class GameManager
     private static Window window;
     private static Camera camera;
     private static Renderer renderer;
-    private static InputHandler input;
-    private static State state;
+    private static InputHandler inputHandler;
+    private static SceneManager sceneManager;
 
     public static GameLoop gameLoop;
     private static UpdateLoop updateLoop;
@@ -23,9 +24,6 @@ public abstract class GameManager
 
     public static void init(String... paths)
     {
-        //GameManager.width = gameConfiguration.getWidth();
-        //GameManager.height = gameConfiguration.getHeight();
-
         for (String path : paths)
         {
             TileManager.loadTiles(new SpriteSheet(path));
@@ -34,21 +32,22 @@ public abstract class GameManager
         camera = new Camera(gameConfiguration.getWidth() / gameConfiguration.getRenderScale(),
                             gameConfiguration.getHeight() / gameConfiguration.getRenderScale());
         renderer = new Renderer(camera);
-        input = new InputHandler(renderer);
+        inputHandler = new InputHandler(renderer);
         updateLoop = new UpdateLoop();
         renderLoop = new RenderLoop(renderer);
         gameLoop = new GameLoop(gameConfiguration.getUPS(), updateLoop, renderLoop);
+        sceneManager = new SceneManager();
     }
 
-    public static void start(State state)
+    public static void start(Scene scene)
     {
-        GameManager.state = state;
+        sceneManager.addScene(scene);
         window = new Window(getConfiguration().getWidth(), gameConfiguration.getHeight(), renderer);
 
-        updateLoop.addUpdatable(state);
-        renderLoop.addRenderable(state);
+        updateLoop.addUpdatable(sceneManager);
+        renderLoop.addRenderable(sceneManager);
         gameLoop.start();
-        //Player player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, input, level);
+        //Player player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, inputHandler, level);
         //enemy = new Blob(new SpriteSheet("/img/player(backup).png"), 300, 200, 0.5, level);
         //enemy.setTarget(player);
         //level.addEntity(player);
@@ -56,14 +55,19 @@ public abstract class GameManager
         //camera.init(player, level);
     }
 
+    public static void stop()
+    {
+        gameLoop.stop();
+    }
+
     public static Camera getCamera()
     {
         return camera;
     }
 
-    public static InputHandler getInput()
+    public static InputHandler getInputHandler()
     {
-        return input;
+        return inputHandler;
     }
 
     public static GameConfiguration getConfiguration()
@@ -71,13 +75,13 @@ public abstract class GameManager
         return gameConfiguration;
     }
 
-    public static void loadState(State state)
+    public static void loadState(Scene scene)
     {
-        if(state != null)
+        if(scene != null)
         {
             //TODO
         }
 
-        GameManager.state = state;
+        sceneManager.addScene(scene);
     }
 }
