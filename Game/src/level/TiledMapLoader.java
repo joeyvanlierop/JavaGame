@@ -1,10 +1,13 @@
 package level;
 
+import gfx.Sprite;
 import gfx.SpriteSheet;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tiles.Tile;
+import tiles.TileManager;
 
 import java.io.File;
 import java.io.FileReader;
@@ -20,21 +23,10 @@ public final class TiledMapLoader
         JSONObject mapFile = loadFile(mapPath);
         JSONObject tileSetFile = loadFile(tileSetPath);
 
-        if(mapFile == null)
-        {
-            System.out.println("Error loading map file");
-            return null;
-        }
-
-        if(tileSetFile == null)
-        {
-            System.out.println("Error loading tile set file");
-            return null;
-        }
-
         long width = (Long) mapFile.get("width");
         long height = (Long) mapFile.get("height");
         ArrayList<TiledMapLayer> mapLayers = new ArrayList<>();
+        ArrayList<Tile> tiles = new ArrayList<>();
         SpriteSheet tileSet = null;
 
         {
@@ -70,14 +62,31 @@ public final class TiledMapLoader
             }
         }
 
+        {
+            long imageWidth = (Long) tileSetFile.get("imagewidth");
+            long imageHeight = (Long) tileSetFile.get("imageheight");
+            JSONObject tileProperties = (JSONObject) tileSetFile.get("tileproperties");
+
+            for(int y = 0; y < imageHeight / 16; y++)
+            {
+                for(int x = 0; x < imageWidth / 16; x++)
+                {
+                    int id = x + y * ((int) imageWidth / 16);
+                    JSONObject tile = (JSONObject) tileProperties.get(Integer.toString(id));
+                    boolean solid = (boolean) tile.get("solid");
+
+                    tiles.add(new Tile(id, solid, new Sprite(x * 16, y * 16,16, 16, tileSet)));
+                }
+            }
+        }
+
         try
         {
-            return new TiledMap(width, height, tileSet, mapLayers);
+            return new TiledMap(width, height, new TileManager(tiles), mapLayers);
         }
         catch(NullPointerException e)
         {
             e.printStackTrace();
-
             return null;
         }
     }

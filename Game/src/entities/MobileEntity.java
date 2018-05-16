@@ -67,9 +67,12 @@ public abstract class MobileEntity extends CollisionEntity {
             double xTile = (x + xMove) + corner % 2 * (sprite.getWidth() - 1);
             double yTile = (y + yMove) + corner / 2 * (sprite.getHeight() - 1);
 
-            //if (level.getTile((int) xTile, (int) yTile).isSolid()) {
-            //    return true;
-            //}
+            /*if (level.getTile((int) xTile, (int) yTile).isSolid())
+            {
+                return true;
+            }*/
+
+            return level.isSolid((int) xTile, (int) yTile);
         }
 
         return false;
