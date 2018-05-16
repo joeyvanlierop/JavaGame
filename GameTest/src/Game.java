@@ -20,9 +20,8 @@ public class Game extends GameManager
 
         init("/img/tile_sheet.png");
 
-        //Level level_01 = new Level("/levels/level_01.png");
         TiledMap level_01 = TiledMapLoader.loadMap("/maps/level_01.json", "/maps/tile_sheet.json");
-        Player player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, GameManager.getInputHandler(), level_01);
+        Player player = new Player(new SpriteSheet("/img/player.png"), 300, 250, 1.5, GameManager.getInputHandler(), level_01);
         Scene scene_01 = new GameScene(level_01, GameManager.getCamera(), player);
 
         getInputHandler().registerKey(KeyEvent.VK_E, () -> System.out.println("TEST"));

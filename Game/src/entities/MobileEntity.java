@@ -72,7 +72,10 @@ public abstract class MobileEntity extends CollisionEntity {
                 return true;
             }*/
 
-            return level.isSolid((int) xTile, (int) yTile);
+            if(level.isSolid((int) xTile, (int) yTile))
+            {
+                return true;
+            }
         }
 
         return false;

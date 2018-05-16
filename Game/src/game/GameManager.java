@@ -41,12 +41,6 @@ public abstract class GameManager
         updateLoop.addUpdatable(sceneManager);
         renderLoop.addRenderable(sceneManager);
         gameLoop.start();
-        //Player player = new Player(new SpriteSheet("/img/player.png"), 250, 250, 1.5, inputHandler, level);
-        //enemy = new Blob(new SpriteSheet("/img/player(backup).png"), 300, 200, 0.5, level);
-        //enemy.setTarget(player);
-        //level.addEntity(player);
-        //level.addEntity(enemy);
-        //camera.init(player, level);
     }
 
     public static void stop()
