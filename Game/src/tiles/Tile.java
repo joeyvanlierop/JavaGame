@@ -1,34 +1,32 @@
 package tiles;
 
-import gfx.Renderer;
 import gfx.Sprite;
-import gfx.SpriteSheet;
 
-public class Tile {
-    public static int TILESIZE = 16;
-
-    private TileType tileType;
+public class Tile
+{
+    private int id;
+    private boolean solid;
     private Sprite sprite;
 
-    public Tile(TileType tileType, SpriteSheet spriteSheet)
+    public Tile(int id, boolean solid, Sprite sprite)
     {
-        this.tileType = tileType;
-        this.sprite = new Sprite(tileType.x * TILESIZE, tileType.y * TILESIZE, TILESIZE, TILESIZE, spriteSheet);
+        this.id = id;
+        this.solid = solid;
+        this.sprite = sprite;
     }
 
-    public void renderTile(Renderer renderer, int xPosition, int yPosition)
+    public int getId()
     {
-        renderer.renderSprite(sprite, xPosition, yPosition);
+        return id;
     }
 
     public boolean isSolid()
     {
-        return tileType.solid;
+        return solid;
     }
 
-    @Override
-    public String toString()
+    public Sprite getSprite()
     {
-        return this.tileType.name();
+        return sprite;
     }
 }

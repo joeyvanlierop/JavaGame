@@ -1,39 +1,18 @@
 package tiles;
 
-import gfx.SpriteSheet;
-
 import java.util.ArrayList;
 
-public final class TileManager {
-    private static ArrayList<Tile> tileList = new ArrayList<>();
+public class TileManager
+{
+    private ArrayList<Tile> tiles;
 
-    public static void loadTiles(SpriteSheet spriteSheet)
+    public TileManager(ArrayList<Tile> tiles)
     {
-        for (TileType t : TileType.values()) {
-            tileList.add(new Tile(t, spriteSheet));
-        }
+        this.tiles = tiles;
     }
 
-    public static Tile getTile(int ID)
+    public Tile getTile(int index)
     {
-        if (ID >= 0) {
-            return tileList.get(ID);
-        } else {
-            return null;
-        }
-    }
-
-    public static int getTileFromColor(String color)
-    {
-        int tile = -1;
-
-        for (TileType t : TileType.values()) {
-            if (t.mapColor.equals(color)) {
-                tile = t.ID;
-                break;
-            }
-        }
-
-        return tile;
+        return tiles.get(index);
     }
 }

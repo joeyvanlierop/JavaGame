@@ -1,0 +1,13 @@
+{ "columns":16,
+ "image":"..\/img\/tile_sheet.png",
+ "imageheight":256,
+ "imagewidth":256,
+ "margin":0,
+ "name":"tile_sheet",
+ "spacing":0,
+ "tilecount":256,
+ "tileheight":16,
+ "tilewidth":16,
+ "transparentcolor":"#ff00ff",
+ "type":"tileset"
+}

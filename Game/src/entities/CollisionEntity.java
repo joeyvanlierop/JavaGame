@@ -1,7 +1,7 @@
 package entities;
 
-import interfaces.CollisionInfo;
 import gfx.Sprite;
+import interfaces.CollisionInfo;
 
 import java.awt.geom.Rectangle2D;
 

@@ -6,7 +6,7 @@ import gfx.Animation;
 import gfx.Sprite;
 import gfx.SpriteSheet;
 import input.InputHandler;
-import level.Level;
+import level.TiledMap;
 
 //@EntityInfo(TODO)
 @CollisionInfo(collisionBoxWidth = 10, collisionBoxHeight = 10)
@@ -22,9 +22,12 @@ public class Player extends MobileEntity {
     private Animation moveLeft;
     private Animation moveRight;
 
-    public Player(SpriteSheet spriteSheet, double x, double y, double moveSpeed, InputHandler input, Level level)
+    private double xMove = 0;
+    private double yMove = 0;
+
+    public Player(SpriteSheet spriteSheet, double x, double y, double moveSpeed, InputHandler input, TiledMap map)
     {
-        super("Player", new Sprite(0, 16, 13, 16, spriteSheet), x, y, moveSpeed, level);
+        super("Player", new Sprite(0, 16, 13, 16, spriteSheet), x, y, moveSpeed, map);
 
         this.input = input;
 
@@ -59,6 +62,30 @@ public class Player extends MobileEntity {
         this.idleDown = new Animation(20, idleDown0, idleDown1);
         this.idleLeft = new Animation(20, idleLeft0, idleLeft1);
         this.idleRight = new Animation(20, idleRight0, idleRight1);
+
+        input.registerKey(Controls.UP.getKeyCode(), () ->
+        {
+            yMove -= moveSpeed;
+            dir = 0;
+        });
+
+        input.registerKey(Controls.DOWN.getKeyCode(), () ->
+        {
+            yMove += moveSpeed;
+            dir = 1;
+        });
+
+        input.registerKey(Controls.LEFT.getKeyCode(), () ->
+        {
+            xMove -= moveSpeed;
+            dir = 2;
+        });
+
+        input.registerKey(Controls.RIGHT.getKeyCode(), () ->
+        {
+            xMove += moveSpeed;
+            dir = 3;
+        });
     }
 
     public void tick()
@@ -99,41 +126,14 @@ public class Player extends MobileEntity {
 
     private void input()
     {
-        double xMove = 0;
-        double yMove = 0;
-
-        //if (input.up.isPressed()) {
-        if(input.getKey(Controls.UP.getKeyCode()))
+        if (xMove != 0 || yMove != 0)
         {
-            yMove -= moveSpeed;
-            dir = 0;
-        }
-
-        //if (input.down.isPressed()) {
-        if(input.getKey(Controls.DOWN.getKeyCode()))
-        {
-            yMove += moveSpeed;
-            dir = 1;
-        }
-
-        //if (input.left.isPressed()) {
-        if(input.getKey(Controls.LEFT.getKeyCode()))
-        {
-            xMove -= moveSpeed;
-            dir = 2;
-        }
-
-        //if (input.right.isPressed()) {
-        if(input.getKey(Controls.RIGHT.getKeyCode()))
-        {
-            xMove += moveSpeed;
-            dir = 3;
-        }
-
-        if (xMove != 0 || yMove != 0) {
             move(xMove, yMove);
-        } else {
-            switch (dir) {
+        }
+        else
+        {
+            switch (dir)
+            {
                 case 0:
                     dir = 4;
                     break;
@@ -148,5 +148,8 @@ public class Player extends MobileEntity {
                     break;
             }
         }
+
+        xMove = 0;
+        yMove = 0;
     }
 }

@@ -3,13 +3,13 @@ package entities;
 import interfaces.CollisionInfo;
 import gfx.Sprite;
 import gfx.SpriteSheet;
-import level.Level;
+import level.TiledMap;
 
 @CollisionInfo(collisionBoxWidth = 10, collisionBoxHeight = 10)
 public class Blob extends Enemy {
-    public Blob(SpriteSheet sheet, double x, double y, double moveSpeed, Level level)
+    public Blob(SpriteSheet sheet, double x, double y, double moveSpeed, TiledMap map)
     {
-        super("Blob", new Sprite(0, 0, 32, 32, sheet), x, y, moveSpeed, level);
+        super("Blob", new Sprite(0, 0, 32, 32, sheet), x, y, moveSpeed, map);
     }
 
     @Override

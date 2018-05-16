@@ -54,4 +54,14 @@ public class SpriteSheet {
 
         return pixels[x + y * width];
     }
+
+    public int getWidth()
+    {
+        return width;
+    }
+
+    public int getHeight()
+    {
+        return height;
+    }
 }

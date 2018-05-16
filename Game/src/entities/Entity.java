@@ -1,9 +1,9 @@
 package entities;
 
-import interfaces.IRenderable;
-import interfaces.IUpdatable;
 import gfx.Renderer;
 import gfx.Sprite;
+import interfaces.IRenderable;
+import interfaces.IUpdatable;
 
 public abstract class Entity implements IUpdatable, IRenderable {
     protected String name;

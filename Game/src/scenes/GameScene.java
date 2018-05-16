@@ -2,26 +2,23 @@ package scenes;
 
 import entities.Entity;
 import game.Camera;
-import game.GameManager;
 import gfx.Renderer;
-import level.Level;
+import level.TiledMap;
 
-import java.awt.event.KeyEvent;
-
-public abstract class GameScene extends Scene
+public class GameScene extends Scene
 {
-    private Level level;
+    private TiledMap map;
     private Camera camera;
     private Entity player;
 
-    public GameScene(Level level, Camera camera, Entity player)
+    public GameScene(TiledMap map, Camera camera, Entity player)
     {
         this.camera = camera;
         this.player = player;
-        this.level = level;
-        this.level.addEntity(player);
+        this.map = map;
+        this.map.addEntity(player);
 
-        this.camera.init(player, level);
+        this.camera.init(player, map);
     }
 
     public void init()
@@ -31,16 +28,11 @@ public abstract class GameScene extends Scene
 
     public void tick()
     {
-        level.tick();
-
-        if(GameManager.getInputHandler().getKey(KeyEvent.VK_ESCAPE))
-        {
-            GameManager.stop();
-        }
+        map.tick();
     }
 
     public void render(Renderer renderer)
     {
-        level.render(renderer);
+        map.render(renderer);
     }
 }

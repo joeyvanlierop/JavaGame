@@ -1,12 +1,10 @@
 package game;
 
 import gfx.Renderer;
-import gfx.SpriteSheet;
 import gfx.Window;
 import input.InputHandler;
 import scenes.Scene;
 import scenes.SceneManager;
-import tiles.TileManager;
 
 public abstract class GameManager
 {
@@ -24,13 +22,8 @@ public abstract class GameManager
 
     public static void init(String... paths)
     {
-        for (String path : paths)
-        {
-            TileManager.loadTiles(new SpriteSheet(path));
-        }
-
-        camera = new Camera(gameConfiguration.getWidth() / gameConfiguration.getRenderScale(),
-                            gameConfiguration.getHeight() / gameConfiguration.getRenderScale());
+        camera = new Camera((int) Math.ceil((double) gameConfiguration.getWidth() / gameConfiguration.getRenderScale()),
+                            (int) Math.ceil((double) gameConfiguration.getHeight() / gameConfiguration.getRenderScale()));
         renderer = new Renderer(camera);
         inputHandler = new InputHandler(renderer);
         updateLoop = new UpdateLoop();
@@ -44,6 +37,7 @@ public abstract class GameManager
         sceneManager.addScene(scene);
         window = new Window(getConfiguration().getWidth(), gameConfiguration.getHeight(), renderer);
 
+        updateLoop.addUpdatable(inputHandler);
         updateLoop.addUpdatable(sceneManager);
         renderLoop.addRenderable(sceneManager);
         gameLoop.start();

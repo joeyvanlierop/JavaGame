@@ -1,19 +1,19 @@
 package entities;
 
 import gfx.Sprite;
-import level.Level;
+import level.TiledMap;
 
 public abstract class MobileEntity extends CollisionEntity {
     protected int dir = 0;
     protected double moveSpeed;
-    protected Level level;
+    protected TiledMap level;
 
-    public MobileEntity(String name, Sprite sprite, double x, double y, double moveSpeed, Level level)
+    public MobileEntity(String name, Sprite sprite, double x, double y, double moveSpeed, TiledMap map)
     {
         super(name, sprite, x, y);
 
         this.moveSpeed = moveSpeed;
-        this.level = level;
+        this.level = map;
     }
 
     // https://github.com/vanZeben/2D-Game-Engine/blob/master/src/ca/vanzeben/game/entities/Mob.java
@@ -67,9 +67,9 @@ public abstract class MobileEntity extends CollisionEntity {
             double xTile = (x + xMove) + corner % 2 * (sprite.getWidth() - 1);
             double yTile = (y + yMove) + corner / 2 * (sprite.getHeight() - 1);
 
-            if (level.getTile((int) xTile, (int) yTile).isSolid()) {
-                return true;
-            }
+            //if (level.getTile((int) xTile, (int) yTile).isSolid()) {
+            //    return true;
+            //}
         }
 
         return false;

@@ -1,8 +1,7 @@
 package game;
 
 import entities.Entity;
-import level.Level;
-import tiles.Tile;
+import level.TiledMap;
 
 public class Camera {
     private int maxOffsetX;
@@ -19,10 +18,10 @@ public class Camera {
         this.viewportHeight = viewportHeight;
     }
 
-    public void init(Entity target, Level level)
+    public void init(Entity target, TiledMap map)
     {
-        this.maxOffsetX = level.getWidth() * Tile.TILESIZE - viewportWidth;
-        this.maxOffsetY = level.getHeight() * Tile.TILESIZE - viewportHeight;
+        this.maxOffsetX = map.getWidth() * 16 - viewportWidth;
+        this.maxOffsetY = map.getHeight() * 16 - viewportHeight;
         this.minOffsetX = 0;
         this.minOffsetY = 0;
 

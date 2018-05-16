@@ -1,15 +1,19 @@
 package input;
 
 import gfx.Renderer;
-import javafx.scene.input.KeyCode;
+import interfaces.IUpdatable;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
 
-public class InputHandler extends KeyAdapter
+public class InputHandler extends KeyAdapter implements IUpdatable
 {
-    private static boolean[] keys = new boolean[255];
+    private ArrayList<KeyEvent> pressedKeys = new ArrayList<>();
+    private ArrayList<Map.Entry<Integer, Runnable>> registeredKeys = new ArrayList<>();
 
     public InputHandler(Renderer renderer)
     {
@@ -18,26 +22,55 @@ public class InputHandler extends KeyAdapter
 
     public void keyPressed(KeyEvent e)
     {
-        setKey(e.getKeyCode(), true);
+        addKey(e);
     }
 
     public void keyReleased(KeyEvent e)
     {
-        setKey(e.getKeyCode(), false);
+        removeKey(e);
     }
 
-    private void setKey(int keyCode, boolean value)
+    private void addKey(KeyEvent keyCode)
     {
-        keys[keyCode] = value;
+        // Don't Add Key To 'pressedKeys' If Already There
+        if (pressedKeys.stream().anyMatch(key -> key.getKeyCode() == keyCode.getKeyCode()))
+        {
+            return;
+        }
+
+        pressedKeys.add(keyCode);
     }
 
-    public static boolean getKey(int keyCode)
+    private void removeKey(KeyEvent keyCode)
     {
-        return keys[keyCode];
+        for(Iterator<KeyEvent> i = pressedKeys.iterator(); i.hasNext();)
+        {
+
+            KeyEvent key = i.next();
+
+            if(key.getKeyCode() == keyCode.getKeyCode())
+            {
+                i.remove();
+            }
+        }
     }
 
-    public static boolean getKey(KeyEvent keyCode)
+    public void registerKey(int keyCode, Runnable consumer)
     {
-        return keys[keyCode.getKeyCode()];
+        registeredKeys.add(new AbstractMap.SimpleEntry<>(keyCode, consumer));
+    }
+
+    public void tick()
+    {
+        pressedKeys.forEach(key ->
+        {
+            registeredKeys.forEach(consumer ->
+            {
+                if (key.getKeyCode() == consumer.getKey().intValue())
+                {
+                    consumer.getValue().run();
+                }
+            });
+        });
     }
 }
