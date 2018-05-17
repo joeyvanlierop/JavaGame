@@ -12,21 +12,20 @@ public class Game extends GameManager
 {
     public static void main(String[] args)
     {
-        getConfiguration().setName("Test");
-        getConfiguration().setWidth(600);
-        getConfiguration().setHeight(600);
-        getConfiguration().setRenderScale(2);
-        getConfiguration().setUPS(60);
+        GameManager.getConfiguration().setName("Test");
+        GameManager.getConfiguration().setWidth(600);
+        GameManager.getConfiguration().setHeight(600);
+        GameManager.getConfiguration().setRenderScale(2);
+        GameManager.getConfiguration().setUPS(60);
+        GameManager.init();
 
-        init("/img/tile_sheet.png");
-
-        TiledMap level_01 = TiledMapLoader.loadMap("/maps/level_01.json", "/maps/tile_sheet.json");
+        TiledMap level_01 = TiledMapLoader.loadMap("/maps/Level01.json");
         Player player = new Player(new SpriteSheet("/img/player.png"), 300, 250, 1.5, GameManager.getInputHandler(), level_01);
         Scene scene_01 = new GameScene(level_01, GameManager.getCamera(), player);
 
-        getInputHandler().registerKey(KeyEvent.VK_E, () -> System.out.println("TEST"));
+        GameManager.getInputHandler().registerKey(KeyEvent.VK_ESCAPE, () -> GameManager.stop());
 
-        start(scene_01);
+        GameManager.start(scene_01);
 
     }
 }

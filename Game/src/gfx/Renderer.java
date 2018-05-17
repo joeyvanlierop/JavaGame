@@ -14,6 +14,7 @@ public class Renderer extends Canvas {
 
     private int[] pixels;
     private BufferedImage view;
+    private Graphics2D g;
 
     public Renderer(Camera player)
     {
@@ -39,11 +40,12 @@ public class Renderer extends Canvas {
             return;
         }
 
-        Graphics2D g = (Graphics2D) bs.getDrawGraphics();
+        g = (Graphics2D) bs.getDrawGraphics();
         AffineTransform t = new AffineTransform();
 
         t.scale(GameManager.getConfiguration().getRenderScale(), GameManager.getConfiguration().getRenderScale());
         g.setTransform(t);
+
 
         g.drawImage(view, 0, 0,null);
 
@@ -72,10 +74,9 @@ public class Renderer extends Canvas {
 
         for (int y = 0; y < spriteHeight; y++) {
             for (int x = 0; x < spriteWidth; x++) {
-
                 renderPixel(x + xPosition - camera.getX(),
-                        y + yPosition - camera.getY(),
-                        spritePixels[x + y * spriteWidth]);
+                            y + yPosition - camera.getY(),
+                               spritePixels[x + y * spriteWidth]);
             }
         }
     }

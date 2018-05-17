@@ -67,7 +67,7 @@ public class GameLoop implements Runnable {
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
 
-                System.out.printf("FPS: %d, UPS: %d\n", frames, updates);
+                GameManager.getWindow().setTitle(String.format("FPS: %d, UPS: %s", frames, updates));
 
                 frames = 0;
                 updates = 0;

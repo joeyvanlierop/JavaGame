@@ -41,7 +41,9 @@ public class TiledMap implements IRenderable, IUpdatable
         for (int y = yBoundMin; y < yBoundMax; y++) {
             for (int x = xBoundMin; x < xBoundMax; x++) {
                 for(TiledMapLayer layer : mapLayers)
+                //for(int i = 0; i < 2; i++)
                 {
+                    //TiledMapLayer layer = mapLayers.get(i);
                     int spriteIndex = layer.getTile(x + y * width) - 1;
 
                     if(spriteIndex >= 0)

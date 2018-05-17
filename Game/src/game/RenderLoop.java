@@ -22,7 +22,8 @@ public class RenderLoop {
 
     public void render()
     {
-        for (IRenderable renderable : renderables) {
+        for (IRenderable renderable : renderables)
+        {
             renderable.render(renderer);
         }
 

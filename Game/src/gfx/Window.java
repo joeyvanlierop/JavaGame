@@ -2,6 +2,7 @@ package gfx;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
 
 public class Window {
     private JFrame frame;
@@ -25,5 +26,10 @@ public class Window {
     public void setTitle(String title)
     {
         frame.setTitle(title);
+    }
+
+    public void close()
+    {
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
 }

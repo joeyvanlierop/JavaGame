@@ -3,6 +3,7 @@ package input;
 import gfx.Renderer;
 import interfaces.IUpdatable;
 
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.AbstractMap;
@@ -10,24 +11,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 
-public class InputHandler extends KeyAdapter implements IUpdatable
+public class InputHandler implements IUpdatable, KeyEventDispatcher
 {
     private ArrayList<KeyEvent> pressedKeys = new ArrayList<>();
     private ArrayList<Map.Entry<Integer, Runnable>> registeredKeys = new ArrayList<>();
 
-    public InputHandler(Renderer renderer)
+    public InputHandler()
     {
-        renderer.addKeyListener(this);
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher(this);
     }
 
-    public void keyPressed(KeyEvent e)
-    {
-        addKey(e);
-    }
+    @Override
+    public boolean dispatchKeyEvent(final KeyEvent e) {
+        int eventId = e.getID();
 
-    public void keyReleased(KeyEvent e)
-    {
-        removeKey(e);
+        switch (eventId) {
+            case KeyEvent.KEY_PRESSED:
+                this.addKey(e);
+                break;
+            case KeyEvent.KEY_RELEASED:
+                this.removeKey(e);
+                break;
+        }
+
+        return false;
     }
 
     private void addKey(KeyEvent keyCode)

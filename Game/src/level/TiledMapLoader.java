@@ -18,10 +18,9 @@ import java.util.Iterator;
 
 public final class TiledMapLoader
 {
-    public static TiledMap loadMap(String mapPath, String tileSetPath)
+    public static TiledMap loadMap(String mapPath)
     {
         JSONObject mapFile = loadFile(mapPath);
-        JSONObject tileSetFile = loadFile(tileSetPath);
 
         long width = (Long) mapFile.get("width");
         long height = (Long) mapFile.get("height");
@@ -37,6 +36,20 @@ public final class TiledMapLoader
                 JSONObject innerObj = i.next();
 
                 tileSet = new SpriteSheet((String) innerObj.get("image"));
+
+                long imageWidth = (Long) innerObj.get("imagewidth");
+                long imageHeight = (Long) innerObj.get("imageheight");
+                JSONObject tileProperties = (JSONObject) innerObj.get("tileproperties");
+
+                for (int y = 0; y < imageHeight / 16; y++) {
+                    for (int x = 0; x < imageWidth / 16; x++) {
+                        int id = x + y * ((int) imageWidth / 16);
+                        JSONObject tile = (JSONObject) tileProperties.get(Integer.toString(id));
+                        boolean solid = (boolean) tile.get("solid");
+
+                        tiles.add(new Tile(id, solid, new Sprite(x * 16, y * 16, 16, 16, tileSet)));
+                    }
+                }
             }
         }
 
@@ -59,24 +72,6 @@ public final class TiledMapLoader
                 }
 
                 mapLayers.add(new TiledMapLayer(layerWidth, layerHeight, layerData));
-            }
-        }
-
-        {
-            long imageWidth = (Long) tileSetFile.get("imagewidth");
-            long imageHeight = (Long) tileSetFile.get("imageheight");
-            JSONObject tileProperties = (JSONObject) tileSetFile.get("tileproperties");
-
-            for(int y = 0; y < imageHeight / 16; y++)
-            {
-                for(int x = 0; x < imageWidth / 16; x++)
-                {
-                    int id = x + y * ((int) imageWidth / 16);
-                    JSONObject tile = (JSONObject) tileProperties.get(Integer.toString(id));
-                    boolean solid = (boolean) tile.get("solid");
-
-                    tiles.add(new Tile(id, solid, new Sprite(x * 16, y * 16,16, 16, tileSet)));
-                }
             }
         }
 
