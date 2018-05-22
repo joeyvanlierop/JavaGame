@@ -38,6 +38,7 @@ public abstract class GameManager
         updateLoop = new UpdateLoop();
         renderLoop = new RenderLoop(renderer);
         gameLoop = new GameLoop(gameConfiguration.getUPS(), updateLoop, renderLoop);
+        eventManager = new EventManager();
     }
 
     public static void start(Scene scene)
@@ -48,7 +49,6 @@ public abstract class GameManager
 
         updateLoop.addUpdatable(inputHandler);
         updateLoop.addUpdatable(sceneManager);
-        updateLoop.addUpdatable(eventManager);
         renderLoop.addRenderable(sceneManager);
         gameLoop.start();
     }

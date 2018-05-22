@@ -1,4 +1,5 @@
 import entities.Player;
+import events.CustomEvent;
 import game.GameManager;
 import gfx.SpriteSheet;
 import level.TiledMap;
@@ -24,6 +25,7 @@ public class Game extends GameManager
         Scene scene_01 = new GameScene(level_01, GameManager.getCamera(), player);
 
         GameManager.getInputHandler().registerKey(KeyEvent.VK_ESCAPE, () -> GameManager.stop());
+        GameManager.getInputHandler().registerKey(KeyEvent.VK_ENTER, () -> GameManager.getEventManager().dispatchEvent(new CustomEvent()));
 
         GameManager.start(scene_01);
 

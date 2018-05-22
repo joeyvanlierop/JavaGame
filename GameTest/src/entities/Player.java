@@ -1,5 +1,8 @@
 package entities;
 
+import events.CustomEvent;
+import events.EventHandler;
+import game.GameManager;
 import input.Controls;
 import interfaces.CollisionInfo;
 import gfx.Animation;
@@ -86,6 +89,8 @@ public class Player extends MobileEntity {
             xMove += moveSpeed;
             dir = 3;
         });
+
+        GameManager.getEventManager().registerListener(this);
     }
 
     public void tick()
@@ -151,5 +156,17 @@ public class Player extends MobileEntity {
 
         xMove = 0;
         yMove = 0;
+    }
+
+    @EventHandler(CustomEvent.class)
+    public void test()
+    {
+        System.out.println("TEST");
+    }
+
+    @EventHandler(CustomEvent.class)
+    public void test2()
+    {
+        System.out.println("TEST2");
     }
 }

@@ -1,11 +1,8 @@
 package events;
 
-import game.GameManager;
-
 public abstract class Event
 {
-    public Event(Object source)
+    public Event()
     {
-        //GameManager.getEventManager().registerHandler(this);
     }
 }
