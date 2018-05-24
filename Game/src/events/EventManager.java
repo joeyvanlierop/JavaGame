@@ -1,12 +1,13 @@
 package events;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EventManager
 {
-    private HashMap<Class<? extends Event>, ArrayList<Method>> eventCallbackMap;
+    private HashMap<Class<? extends Event>, ArrayList<IEventListener>> eventCallbackMap;
 
     public EventManager()
     {
@@ -15,20 +16,35 @@ public class EventManager
 
     public void dispatchEvent(Event event)
     {
-        ArrayList<Method> callbacks = eventCallbackMap.get(event.getClass());
+        ArrayList<IEventListener> classCallbacks = eventCallbackMap.get(event.getClass());
 
-        if(callbacks == null)
+        if(classCallbacks == null)
         {
             return;
         }
 
-        for(Method callback : callbacks)
+        for(IEventListener listener : classCallbacks)
         {
-            //TODO: Invoke Method
+            for(Method callback : listener.getClass().getMethods())
+            {
+                if(callback.isAnnotationPresent(EventHandler.class))
+                {
+                    if(callback.getAnnotation(EventHandler.class).value() == event.getClass())
+                    {
+                        try {
+                            callback.invoke(listener);
+                        } catch (IllegalAccessException e) {
+                            e.printStackTrace();
+                        } catch (InvocationTargetException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
         }
     }
 
-    public void registerListener(Object listener)
+    public void registerListener(IEventListener listener)
     {
         for(Method method : listener.getClass().getMethods())
         {
@@ -38,14 +54,17 @@ public class EventManager
 
                 if(eventCallbackMap.containsKey(value))
                 {
-                    eventCallbackMap.get(value).add(method);
+                    if(!eventCallbackMap.get(value).contains(listener))
+                    {
+                        eventCallbackMap.get(value).add(listener);
+                    }
                 }
                 else
                 {
-                    ArrayList<Method> callbacks = new ArrayList<>();
-                    callbacks.add(method);
+                    ArrayList<IEventListener> registeredListeners = new ArrayList<>();
+                    registeredListeners.add(listener);
 
-                    eventCallbackMap.put(value, callbacks);
+                    eventCallbackMap.put(value, registeredListeners);
                 }
             }
         }

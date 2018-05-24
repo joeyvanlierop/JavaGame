@@ -2,6 +2,7 @@ package entities;
 
 import events.CustomEvent;
 import events.EventHandler;
+import events.IEventListener;
 import game.GameManager;
 import input.Controls;
 import interfaces.CollisionInfo;
@@ -13,7 +14,8 @@ import level.TiledMap;
 
 //@EntityInfo(TODO)
 @CollisionInfo(collisionBoxWidth = 10, collisionBoxHeight = 10)
-public class Player extends MobileEntity {
+public class Player extends MobileEntity implements IEventListener
+{
     private InputHandler input;
 
     private Animation idleUp;
@@ -161,12 +163,12 @@ public class Player extends MobileEntity {
     @EventHandler(CustomEvent.class)
     public void test()
     {
-        System.out.println("TEST");
+        //System.out.println("TEST");
     }
 
     @EventHandler(CustomEvent.class)
     public void test2()
     {
-        System.out.println("TEST2");
+        //System.out.println("TEST2");
     }
 }
