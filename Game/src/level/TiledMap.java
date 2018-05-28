@@ -4,8 +4,6 @@ import entities.Entity;
 import game.Camera;
 import game.GameManager;
 import gfx.Renderer;
-import gfx.Sprite;
-import gfx.SpriteSheet;
 import interfaces.IRenderable;
 import interfaces.IUpdatable;
 import tiles.TileManager;

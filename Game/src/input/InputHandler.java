@@ -1,10 +1,8 @@
 package input;
 
-import gfx.Renderer;
 import interfaces.IUpdatable;
 
 import java.awt.*;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -13,7 +11,7 @@ import java.util.Map;
 
 public class InputHandler implements IUpdatable, KeyEventDispatcher
 {
-    private ArrayList<KeyEvent> pressedKeys = new ArrayList<>();
+    private final ArrayList<KeyEvent> pressedKeys = new ArrayList<>();
     private ArrayList<Map.Entry<Integer, Runnable>> registeredKeys = new ArrayList<>();
 
     public InputHandler()

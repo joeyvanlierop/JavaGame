@@ -1,8 +1,8 @@
 package entities;
 
-import interfaces.CollisionInfo;
 import gfx.Sprite;
 import gfx.SpriteSheet;
+import interfaces.CollisionInfo;
 import level.TiledMap;
 
 @CollisionInfo(collisionBoxWidth = 10, collisionBoxHeight = 10)

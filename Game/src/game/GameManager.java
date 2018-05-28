@@ -4,7 +4,7 @@ import events.EventManager;
 import gfx.Renderer;
 import gfx.Window;
 import input.InputHandler;
-import scenes.Scene;
+import scenes.IScene;
 import scenes.SceneManager;
 
 public abstract class GameManager
@@ -41,9 +41,9 @@ public abstract class GameManager
         eventManager = new EventManager();
     }
 
-    public static void start(Scene scene)
+    public static void start(IScene IScene)
     {
-        sceneManager.addScene(scene);
+        sceneManager.addScene(IScene);
 
         window = new Window(getConfiguration().getWidth(), gameConfiguration.getHeight(), renderer);
 

@@ -4,12 +4,12 @@ import events.CustomEvent;
 import events.EventHandler;
 import events.IEventListener;
 import game.GameManager;
-import input.Controls;
-import interfaces.CollisionInfo;
 import gfx.Animation;
 import gfx.Sprite;
 import gfx.SpriteSheet;
+import input.Controls;
 import input.InputHandler;
+import interfaces.CollisionInfo;
 import level.TiledMap;
 
 //@EntityInfo(TODO)
@@ -163,12 +163,6 @@ public class Player extends MobileEntity implements IEventListener
     @EventHandler(CustomEvent.class)
     public void test()
     {
-        //System.out.println("TEST");
-    }
-
-    @EventHandler(CustomEvent.class)
-    public void test2()
-    {
-        //System.out.println("TEST2");
+        System.out.println("TEST");
     }
 }

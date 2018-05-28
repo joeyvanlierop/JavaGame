@@ -8,31 +8,26 @@ import java.util.Stack;
 
 public class SceneManager implements IUpdatable, IRenderable
 {
-    private Stack<Scene> scenes;
-
-    public SceneManager()
-    {
-        scenes = new Stack<>();
-    }
+    private Stack<IScene> IScenes = new Stack<>();
 
     public void tick()
     {
-        if(!scenes.empty())
+        if(!IScenes.empty())
         {
-            scenes.peek().tick();
+            IScenes.peek().tick();
         }
     }
 
     public void render(Renderer renderer)
     {
-        if(!scenes.empty())
+        if(!IScenes.empty())
         {
-            scenes.peek().render(renderer);
+            IScenes.peek().render(renderer);
         }
     }
 
-    public void addScene(Scene scene)
+    public void addScene(IScene IScene)
     {
-        scenes.push(scene);
+        IScenes.push(IScene);
     }
 }
