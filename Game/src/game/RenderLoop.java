@@ -1,7 +1,6 @@
 package game;
 
 import gfx.Renderer;
-import interfaces.IRenderable;
 
 import java.util.ArrayList;
 

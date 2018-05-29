@@ -5,6 +5,7 @@ import gfx.Renderer;
 import gfx.Window;
 import input.InputHandler;
 import scenes.IScene;
+import scenes.Scene;
 import scenes.SceneManager;
 
 public abstract class GameManager
@@ -41,12 +42,11 @@ public abstract class GameManager
         eventManager = new EventManager();
     }
 
-    public static void start(IScene IScene)
+    public static void start(IScene scene)
     {
-        sceneManager.addScene(IScene);
-
         window = new Window(getConfiguration().getWidth(), gameConfiguration.getHeight(), renderer);
 
+        sceneManager.addScene(scene);
         updateLoop.addUpdatable(inputHandler);
         updateLoop.addUpdatable(sceneManager);
         renderLoop.addRenderable(sceneManager);

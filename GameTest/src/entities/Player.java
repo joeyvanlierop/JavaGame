@@ -9,7 +9,7 @@ import gfx.Sprite;
 import gfx.SpriteSheet;
 import input.Controls;
 import input.InputHandler;
-import interfaces.CollisionInfo;
+import entities.interfaces.CollisionInfo;
 import level.TiledMap;
 
 //@EntityInfo(TODO)
@@ -95,7 +95,7 @@ public class Player extends MobileEntity implements IEventListener
         GameManager.getEventManager().registerListener(this);
     }
 
-    public void tick()
+    public void update()
     {
         animate();
         input();

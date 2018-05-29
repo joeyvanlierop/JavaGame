@@ -1,24 +1,20 @@
 package level;
 
-import entities.Entity;
 import game.Camera;
 import game.GameManager;
 import gfx.Renderer;
-import interfaces.IRenderable;
-import interfaces.IUpdatable;
+import game.IRenderable;
 import tiles.TileManager;
 
 import java.util.ArrayList;
 
-public class TiledMap implements IRenderable, IUpdatable
+public class TiledMap implements IRenderable
 {
-    private Camera camera;
-
     private int width;
     private int height;
     private TileManager tileManager;
     private ArrayList<TiledMapLayer> mapLayers;
-    private ArrayList<Entity> entities = new ArrayList<>();
+    private Camera camera;
 
     public TiledMap(long width, long height, TileManager tileManager, ArrayList mapLayers)
     {
@@ -39,9 +35,7 @@ public class TiledMap implements IRenderable, IUpdatable
         for (int y = yBoundMin; y < yBoundMax; y++) {
             for (int x = xBoundMin; x < xBoundMax; x++) {
                 for(TiledMapLayer layer : mapLayers)
-                //for(int i = 0; i < 2; i++)
                 {
-                    //TiledMapLayer layer = mapLayers.get(i);
                     int spriteIndex = layer.getTile(x + y * width) - 1;
 
                     if(spriteIndex >= 0)
@@ -51,24 +45,6 @@ public class TiledMap implements IRenderable, IUpdatable
                 }
             }
         }
-
-        for (Entity entity : entities)
-        {
-            entity.render(renderer);
-        }
-    }
-
-    public void tick()
-    {
-        for (Entity entity : entities)
-        {
-            entity.tick();
-        }
-    }
-
-    public void addEntity(Entity entity)
-    {
-        entities.add(entity);
     }
 
     public int getWidth()

@@ -2,8 +2,8 @@ package entities;
 
 import gfx.Renderer;
 import gfx.Sprite;
-import interfaces.IRenderable;
-import interfaces.IUpdatable;
+import game.IRenderable;
+import game.IUpdatable;
 
 public abstract class Entity implements IUpdatable, IRenderable {
     protected String name;
@@ -20,7 +20,7 @@ public abstract class Entity implements IUpdatable, IRenderable {
         this.y = y;
     }
 
-    public abstract void tick();
+    public abstract void update();
 
     public void render(Renderer renderer)
     {

@@ -4,7 +4,6 @@ import game.GameManager;
 import gfx.SpriteSheet;
 import level.TiledMap;
 import level.TiledMapLoader;
-import scenes.IScene;
 import scenes.Scene;
 
 import java.awt.event.KeyEvent;
@@ -22,12 +21,14 @@ public class Game extends GameManager
 
         TiledMap level_01 = TiledMapLoader.loadMap("/maps/Level01.json");
         Player player = new Player(new SpriteSheet("/img/player.png"), 300, 250, 1.5, GameManager.getInputHandler(), level_01);
-        IScene IScene_01 = new Scene(level_01);
+        Scene scene = new Scene(level_01);
+        scene.addEntity(player);
 
+        GameManager.getCamera().init(player, level_01);
         GameManager.getInputHandler().registerKey(KeyEvent.VK_ESCAPE, () -> GameManager.stop());
         GameManager.getInputHandler().registerKey(KeyEvent.VK_ENTER, () -> GameManager.getEventManager().dispatchEvent(new CustomEvent()));
 
-        GameManager.start(IScene_01);
+        GameManager.start(scene);
 
     }
 }

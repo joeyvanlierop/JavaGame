@@ -1,14 +1,16 @@
 package scenes;
 
 import gfx.Renderer;
+import game.IRenderable;
+import game.IUpdatable;
 
-public interface IScene
+public interface IScene extends IRenderable, IUpdatable
 {
-    void load();
+    void onEnter();
 
-    void unload();
+    void onExit();
 
-    void tick();
+    void update();
 
     void render(Renderer renderer);
 }

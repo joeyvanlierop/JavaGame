@@ -1,6 +1,6 @@
 package input;
 
-import interfaces.IUpdatable;
+import game.IUpdatable;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -65,7 +65,7 @@ public class InputHandler implements IUpdatable, KeyEventDispatcher
         registeredKeys.add(new AbstractMap.SimpleEntry<>(keyCode, consumer));
     }
 
-    public void tick()
+    public void update()
     {
         pressedKeys.forEach(key ->
         {

@@ -11,7 +11,7 @@ public abstract class Enemy extends MobileEntity {
         super(name, sprite, x, y, moveSpeed, map);
     }
 
-    public void tick()
+    public void update()
     {
         target();
     }

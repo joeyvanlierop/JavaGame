@@ -1,33 +1,39 @@
 package scenes;
 
 import gfx.Renderer;
-import interfaces.IRenderable;
-import interfaces.IUpdatable;
+import game.IRenderable;
+import game.IUpdatable;
 
-import java.util.Stack;
+import java.util.ArrayList;
 
 public class SceneManager implements IUpdatable, IRenderable
 {
-    private Stack<IScene> IScenes = new Stack<>();
+    private ArrayList<IScene> scenes = new ArrayList<>();
+    private int currentScene = 0;
 
-    public void tick()
+    public void update()
     {
-        if(!IScenes.empty())
+        if(!scenes.isEmpty())
         {
-            IScenes.peek().tick();
+            scenes.get(currentScene).update();
         }
     }
 
     public void render(Renderer renderer)
     {
-        if(!IScenes.empty())
+        if(!scenes.isEmpty())
         {
-            IScenes.peek().render(renderer);
+            scenes.get(currentScene).render(renderer);
         }
     }
 
     public void addScene(IScene IScene)
     {
-        IScenes.push(IScene);
+        scenes.add(IScene);
+    }
+
+    public void loadScene(int sceneNumber)
+    {
+        currentScene = sceneNumber;
     }
 }

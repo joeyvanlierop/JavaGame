@@ -55,8 +55,9 @@ public class GameLoop implements Runnable {
             deltaTime += (currentTime - lastTime) / UPS_NS;
             lastTime = currentTime;
 
-            while (deltaTime >= 1.0) {
-                updateLoop.tick();
+            while (deltaTime >= 1.0)
+            {
+                updateLoop.update();
                 updates++;
                 deltaTime -= 1.0;
             }

@@ -1,7 +1,5 @@
 package game;
 
-import interfaces.IUpdatable;
-
 import java.util.ArrayList;
 
 public class UpdateLoop
@@ -18,10 +16,10 @@ public class UpdateLoop
         updatables.add(updatable);
     }
 
-    public void tick()
+    public void update()
     {
         for (IUpdatable updatable : updatables) {
-            updatable.tick();
+            updatable.update();
         }
     }
 }
