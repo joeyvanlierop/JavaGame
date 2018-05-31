@@ -15,8 +15,11 @@ import java.util.logging.Logger;
  *
  */
 public abstract class GameObject implements IUpdatable, IRenderable {
-    protected String name;
-    //protected Sprite sprite;
+    // TODO: Implement ID System
+    //https://github.com/ClickerMonkey/Ents/blob/master/Java/src/org/magnos/entity/
+    //https://www.gamedev.net/articles/programming/general-and-gameplay-programming/understanding-component-entity-systems-r3013/
+    protected final int id = 0;
+    protected final String name;
 
     protected final Transform transform;
     protected final SpriteRenderer spriteRenderer;
@@ -35,7 +38,7 @@ public abstract class GameObject implements IUpdatable, IRenderable {
         this.name = name;
         this.transform = new Transform(x, y);
 
-        this.components.add(transform);
+        this.addComponent(transform);
     }
 
     public GameObject(String name, Sprite sprite, double x, double y)
@@ -44,7 +47,7 @@ public abstract class GameObject implements IUpdatable, IRenderable {
         this.transform = new Transform();
         this.spriteRenderer = new SpriteRenderer(sprite);
 
-        this.components.add(transform);
+        this.addComponent(transform, spriteRenderer);
         //this.sprite = sprite;
     }
 
@@ -65,17 +68,20 @@ public abstract class GameObject implements IUpdatable, IRenderable {
         //renderer.renderSprite(sprite, (int) x, (int) y);
     }
 
-    public void addComponent(Component newComponent)
+    public void addComponent(Component... newComponents)
     {
-        for(Component component : components)
+        for(Component newComponent : newComponents)
         {
-            if(newComponent.getClass() == component.getClass())
+            for (Component component : components)
             {
-                return;
+                if (newComponent.getClass() == component.getClass())
+                {
+                    return;
+                }
             }
-        }
 
-        components.add(newComponent);
+            components.add(newComponent);
+        }
     }
 
     public Component getComponent(Class returnType)
