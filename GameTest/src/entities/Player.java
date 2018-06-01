@@ -14,7 +14,7 @@ import level.TiledMap;
 
 //@EntityInfo(TODO)
 @CollisionInfo(collisionBoxWidth = 10, collisionBoxHeight = 10)
-public class Player extends MobileGameObject implements IEventListener
+public class Player extends MobileEntity implements IEventListener
 {
     private InputHandler input;
 

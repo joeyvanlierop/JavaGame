@@ -5,11 +5,12 @@ import entities.interfaces.CollisionInfo;
 
 import java.awt.geom.Rectangle2D;
 
-public abstract class CollisionGameObject extends GameObject {
+public abstract class CollisionEntity extends Entity
+{
     private int collisionBoxWidth;
     private int collisionBoxHeight;
 
-    public CollisionGameObject(String name, Sprite sprite, double x, double y)
+    public CollisionEntity(String name, Sprite sprite, double x, double y)
     {
         super(name, sprite, x, y);
 

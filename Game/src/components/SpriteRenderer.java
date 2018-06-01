@@ -1,5 +1,6 @@
 package components;
 
+import entities.Component;
 import gfx.Renderer;
 import gfx.Sprite;
 

@@ -1,6 +1,6 @@
 package scenes;
 
-import entities.GameObject;
+import entities.Entity;
 import game.Camera;
 import game.GameManager;
 import gfx.Renderer;
@@ -14,7 +14,7 @@ public class Scene implements IScene
     //http://www.java-gaming.org/index.php/topic,30912
 
     private TiledMap map;
-    private ArrayList<GameObject> entities = new ArrayList<>();
+    private ArrayList<Entity> entities = new ArrayList<>();
     private Camera camera;
 
     public Scene(TiledMap map)
@@ -35,9 +35,9 @@ public class Scene implements IScene
 
     public void update()
     {
-        for(GameObject gameObject : entities)
+        for(Entity entity : entities)
         {
-            gameObject.update();
+            entity.update();
         }
     }
 
@@ -45,14 +45,14 @@ public class Scene implements IScene
     {
         map.render(renderer);
 
-        for(GameObject gameObject : entities)
+        for(Entity entity : entities)
         {
-            gameObject.render(renderer);
+            entity.render(renderer);
         }
     }
 
-    public void addEntity(GameObject gameObject)
+    public void addEntity(Entity entity)
     {
-        entities.add(gameObject);
+        entities.add(entity);
     }
 }

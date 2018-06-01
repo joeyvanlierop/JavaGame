@@ -3,8 +3,9 @@ package entities;
 import gfx.Sprite;
 import level.TiledMap;
 
-public abstract class Enemy extends MobileGameObject {
-    protected GameObject target = null;
+public abstract class Enemy extends MobileEntity
+{
+    protected Entity target = null;
 
     public Enemy(String name, Sprite sprite, double x, double y, double moveSpeed, TiledMap map)
     {
@@ -16,7 +17,7 @@ public abstract class Enemy extends MobileGameObject {
         target();
     }
 
-    public void setTarget(GameObject target)
+    public void setTarget(Entity target)
     {
         this.target = target;
     }

@@ -3,12 +3,13 @@ package entities;
 import gfx.Sprite;
 import level.TiledMap;
 
-public abstract class MobileGameObject extends CollisionGameObject {
+public abstract class MobileEntity extends CollisionEntity
+{
     protected int dir = 0;
     protected double moveSpeed;
     protected TiledMap level;
 
-    public MobileGameObject(String name, Sprite sprite, double x, double y, double moveSpeed, TiledMap map)
+    public MobileEntity(String name, Sprite sprite, double x, double y, double moveSpeed, TiledMap map)
     {
         super(name, sprite, x, y);
 

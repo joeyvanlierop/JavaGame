@@ -1,5 +1,7 @@
 package components;
 
+import entities.Component;
+
 public class Transform extends Component
 {
     private double x;
