@@ -3,8 +3,10 @@ package entities;
 import gfx.Renderer;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class EntityManager
 {
@@ -13,60 +15,78 @@ public final class EntityManager
     //https://github.com/ClickerMonkey/Ents/blob/master/Java/src/org/magnos/entity/
     //https://www.gamedev.net/articles/programming/general-and-gameplay-programming/understanding-component-entity-systems-r3013/
 
-    public static HashMap<Class<? extends Component>, ArrayList<UUID>> componentPool = new HashMap<>();
+    public static HashMap<Class<? extends Component>, HashMap<UUID, ArrayList<Component>>> componentPool = new HashMap<>();
 
     public static UUID createEntity()
     {
         UUID ID = UUID.randomUUID();
-        //Entity entity = new Entity(ID);
 
         return ID;
     }
 
+    public static void destroyEntity(UUID ID)
+    {
+        for(HashMap IDS : componentPool.values())
+        {
+            IDS.remove(ID);
+        }
+    }
+
     public static void addComponent(UUID ID, Component component)
     {
-        componentPool.putIfAbsent(component.getClass(), new ArrayList<UUID>());
+        // Instantiate Keys If Absent
+        componentPool.putIfAbsent(component.getClass(), new HashMap<>());
+        componentPool.get(component.getClass()).putIfAbsent(ID, new ArrayList<>());
 
-        if(componentPool.get(component.getClass()).contains(ID))
+        // Link Component To ID
+        componentPool.get(component.getClass()).get(ID).add(component);
+
+        //System.out.println("TEST");
+        System.out.println(getComponent(ID, component.getClass()));
+    }
+
+    public static void addSingletonComponent(UUID ID, Component component)
+    {
+        // Instantiate Keys If Absent
+        componentPool.putIfAbsent(component.getClass(), new HashMap<>());
+        componentPool.get(component.getClass()).putIfAbsent(ID, new ArrayList<>());
+
+        // Link Component To ID
+        if(!componentPool.get(component).get(ID).contains(component))
         {
-            componentPool.get(component.getClass()).add(ID);
+            componentPool.get(component.getClass()).get(ID).add(component);
         }
     }
 
-    public boolean hasComponent(UUID ID, Component component)
+    public static boolean hasComponent(UUID ID, Class<? extends Component> component)
     {
-        if(componentPool.containsKey(component.getClass()))
+        if(componentPool.containsKey(component))
         {
-            return componentPool.get(component.getClass()).contains(ID);
+            return componentPool.get(component).containsKey(ID);
         }
 
         return false;
     }
 
-    public boolean hasComponent(UUID ID, Class<? extends Component> componentType)
+    public static Component getComponent(UUID ID, Class<? extends Component> component)
     {
-        if(componentPool.containsKey(componentType))
-        {
-            return componentPool.get(componentType).contains(ID);
-        }
-
-        return false;
+        return componentPool.get(component).get(ID).get(0);
     }
 
-    public static void destroyEntity(Entity entity)
+    public static ArrayList<Component> getComponents(UUID ID, Class<? extends Component> component)
     {
-        entityPool.remove(entity);
+        return componentPool.get(component).get(ID);
     }
 
-    public EntityGroup getGroup(Class<? extends Component>... components)
+    public static ArrayList<UUID> getEntityGroup(Class<? extends Component>... components)
     {
-        EntityGroup entityGroup = new EntityGroup();
+        ArrayList<UUID> entityGroup = new ArrayList<>();
 
-        for(Entity entity : entityPool)
+        for(Class<? extends Component> component : components)
         {
-            if(entity.hasComponent(components))
+            if(componentPool.containsKey(component))
             {
-                entityGroup.addEntity(entity);
+                entityGroup.addAll(componentPool.get(component).keySet());
             }
         }
 

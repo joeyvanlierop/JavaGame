@@ -1,3 +1,4 @@
+/*
 package entities;
 
 import events.CustomEvent;
@@ -163,6 +164,7 @@ public class Player extends MobileEntity implements IEventListener
     @EventHandler(CustomEvent.class)
     public void test()
     {
-        System.out.println("TEST");
+        EntitySystem.out.println("TEST");
     }
 }
+ */

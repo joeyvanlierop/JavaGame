@@ -1,7 +1,10 @@
 package game;
 
-import entities.Entity;
+import entities.EntityManager;
+import entities.components.PositionComponent;
 import level.TiledMap;
+
+import java.util.UUID;
 
 public class Camera {
     private int maxOffsetX;
@@ -10,7 +13,7 @@ public class Camera {
     private int minOffsetY;
     private int viewportWidth;
     private int viewportHeight;
-    private Entity target;
+    private UUID targetID;
 
     public Camera(int viewportWidth, int viewportHeight)
     {
@@ -18,19 +21,22 @@ public class Camera {
         this.viewportHeight = viewportHeight;
     }
 
-    public void init(Entity target, TiledMap map)
+    public void init(UUID target, TiledMap map)
     {
         this.maxOffsetX = map.getWidth() * 16 - viewportWidth;
         this.maxOffsetY = map.getHeight() * 16 - viewportHeight;
         this.minOffsetX = 0;
         this.minOffsetY = 0;
 
-        this.target = target;
+        this.targetID = target;
     }
 
     public int getX()
     {
-        int camX = (int) target.getX() + (target.getWidth() / 2) - (viewportWidth / 2);
+        PositionComponent target = (PositionComponent) EntityManager.getComponent(this.targetID, PositionComponent.class);
+
+        //int camX = (int) this.target.getX() + (this.target.getWidth() / 2) - (viewportWidth / 2);
+        int camX = (int) target.getX();
 
         if (camX > maxOffsetX)
             return maxOffsetX;
@@ -43,7 +49,10 @@ public class Camera {
 
     public int getY()
     {
-        int camY = (int) target.getY() + (target.getHeight() / 2) - (viewportHeight / 2);
+        PositionComponent target = (PositionComponent) EntityManager.getComponent(this.targetID, PositionComponent.class);
+
+        //int camY = (int) target.getY() + (target.getHeight() / 2) - (viewportHeight / 2);
+        int camY = (int) target.getY();
 
         if (camY > maxOffsetY)
             return maxOffsetY;

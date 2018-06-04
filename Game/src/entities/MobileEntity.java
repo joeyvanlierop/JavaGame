@@ -1,9 +1,13 @@
+
+/*
 package entities;
+
 
 import gfx.Sprite;
 import level.TiledMap;
 
-public abstract class MobileEntity extends CollisionEntity
+@Deprecated
+public abstract class MobileEntity
 {
     protected int dir = 0;
     protected double moveSpeed;
@@ -11,8 +15,6 @@ public abstract class MobileEntity extends CollisionEntity
 
     public MobileEntity(String name, Sprite sprite, double x, double y, double moveSpeed, TiledMap map)
     {
-        super(name, sprite, x, y);
-
         this.moveSpeed = moveSpeed;
         this.level = map;
     }
@@ -71,7 +73,7 @@ public abstract class MobileEntity extends CollisionEntity
             /*if (level.getTile((int) xTile, (int) yTile).isSolid())
             {
                 return true;
-            }*/
+            }
 
             if(level.isSolid((int) xTile, (int) yTile))
             {
@@ -90,3 +92,4 @@ public abstract class MobileEntity extends CollisionEntity
         return 1;
     }
 }
+*/
