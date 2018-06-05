@@ -33,10 +33,11 @@ public class Camera {
 
     public int getX()
     {
-        PositionComponent target = (PositionComponent) EntityManager.getComponent(this.targetID, PositionComponent.class);
+        //PositionComponent target = (PositionComponent) EntityManager.getComponent(this.targetID, PositionComponent.class);
 
         //int camX = (int) this.target.getX() + (this.target.getWidth() / 2) - (viewportWidth / 2);
-        int camX = (int) target.getX();
+        //int camX = (int) target.getX();
+        int camX = 300 - (viewportWidth / 2);
 
         if (camX > maxOffsetX)
             return maxOffsetX;
@@ -49,10 +50,11 @@ public class Camera {
 
     public int getY()
     {
-        PositionComponent target = (PositionComponent) EntityManager.getComponent(this.targetID, PositionComponent.class);
+        //PositionComponent target = (PositionComponent) EntityManager.getComponent(this.targetID, PositionComponent.class);
 
         //int camY = (int) target.getY() + (target.getHeight() / 2) - (viewportHeight / 2);
-        int camY = (int) target.getY();
+        //int camY = (int) target.getY();
+        int camY = 300 - (viewportHeight / 2);
 
         if (camY > maxOffsetY)
             return maxOffsetY;

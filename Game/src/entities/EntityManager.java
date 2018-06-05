@@ -1,12 +1,8 @@
 package entities;
 
-import gfx.Renderer;
-
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public final class EntityManager
 {
@@ -15,7 +11,7 @@ public final class EntityManager
     //https://github.com/ClickerMonkey/Ents/blob/master/Java/src/org/magnos/entity/
     //https://www.gamedev.net/articles/programming/general-and-gameplay-programming/understanding-component-entity-systems-r3013/
 
-    public static HashMap<Class<? extends Component>, HashMap<UUID, ArrayList<Component>>> componentPool = new HashMap<>();
+    private static HashMap<Class<? extends Component>, HashMap<UUID, ArrayList<Component>>> componentPool = new HashMap<>();
 
     public static UUID createEntity()
     {
@@ -40,21 +36,17 @@ public final class EntityManager
 
         // Link Component To ID
         componentPool.get(component.getClass()).get(ID).add(component);
-
-        //System.out.println("TEST");
-        System.out.println(getComponent(ID, component.getClass()));
     }
 
     public static void addSingletonComponent(UUID ID, Component component)
     {
-        // Instantiate Keys If Absent
-        componentPool.putIfAbsent(component.getClass(), new HashMap<>());
-        componentPool.get(component.getClass()).putIfAbsent(ID, new ArrayList<>());
-
-        // Link Component To ID
-        if(!componentPool.get(component).get(ID).contains(component))
+        if(!hasComponent(ID, component.getClass()))
         {
-            componentPool.get(component.getClass()).get(ID).add(component);
+            addComponent(ID, component);
+        }
+        else
+        {
+            java.lang.System.out.println("SingletonComponent Already Exists");
         }
     }
 

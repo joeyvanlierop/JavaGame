@@ -1,7 +1,7 @@
 package entities.systems;
 
 import entities.EntityManager;
-import entities.EntitySystem;
+import entities.System;
 import entities.components.PositionComponent;
 import entities.components.SpriteComponent;
 import gfx.Renderer;
@@ -9,11 +9,10 @@ import gfx.Renderer;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class SpriteRendererEntitySystem extends EntitySystem
+public class SpriteRendererSystem extends System
 {
     public void render(Renderer renderer)
     {
-        System.out.println("TEST");
         ArrayList<UUID> entityGroup = EntityManager.getEntityGroup(SpriteComponent.class, PositionComponent.class);
 
         for(UUID ID : entityGroup)

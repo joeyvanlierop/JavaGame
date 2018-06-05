@@ -164,7 +164,7 @@ public class Player extends MobileEntity implements IEventListener
     @EventHandler(CustomEvent.class)
     public void test()
     {
-        EntitySystem.out.println("TEST");
+        System.out.println("TEST");
     }
 }
  */

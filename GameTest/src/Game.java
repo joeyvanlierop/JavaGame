@@ -1,6 +1,7 @@
 import entities.EntityManager;
 import entities.components.PositionComponent;
 import entities.components.SpriteComponent;
+import entities.systems.SpriteRendererSystem;
 import events.CustomEvent;
 import game.GameManager;
 import gfx.Sprite;
@@ -26,16 +27,14 @@ public class Game extends GameManager
         UUID player = EntityManager.createEntity();
 
         {
-            EntityManager.addComponent(player, new SpriteComponent(new Sprite(0, 16, 0, 16, new SpriteSheet("/img/player.png"))));
-            EntityManager.addComponent(player, new PositionComponent(100, 250));
+            EntityManager.addSingletonComponent(player, new SpriteComponent(new Sprite(0, 16, 16, 16, new SpriteSheet("/img/player.png"))));
+            EntityManager.addSingletonComponent(player, new PositionComponent(300, 300));
         }
-
-        PositionComponent pos = (PositionComponent) EntityManager.getComponent(player, PositionComponent.class);
 
         TiledMap level_01 = TiledMapLoader.loadMap("/maps/Level01.json");
         //Player player = new Player(new SpriteSheet("/img/player.png"), 300, 250, 1.5, GameManager.getInputHandler(), level_01);
         Scene scene = new Scene(level_01);
-        scene.
+        scene.addSystem(new SpriteRendererSystem());
 
         GameManager.getCamera().init(player, level_01);
         GameManager.getInputHandler().registerKey(KeyEvent.VK_ESCAPE, () -> GameManager.stop());

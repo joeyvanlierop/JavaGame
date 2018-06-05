@@ -1,4 +1,3 @@
-
 /*
 package entities;
 
@@ -6,7 +5,6 @@ package entities;
 import gfx.Sprite;
 import level.TiledMap;
 
-@Deprecated
 public abstract class MobileEntity
 {
     protected int dir = 0;
