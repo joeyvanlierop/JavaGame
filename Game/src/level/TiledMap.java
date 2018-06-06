@@ -1,5 +1,8 @@
 package level;
 
+import entities.EntityManager;
+import entities.components.CameraComponent;
+import entities.components.PositionComponent;
 import game.Camera;
 import game.GameManager;
 import gfx.Renderer;
@@ -14,7 +17,7 @@ public class TiledMap implements IRenderable
     private int height;
     private TileManager tileManager;
     private ArrayList<TiledMapLayer> mapLayers;
-    private Camera camera;
+    CameraComponent camera;
 
     public TiledMap(long width, long height, TileManager tileManager, ArrayList mapLayers)
     {
@@ -22,7 +25,7 @@ public class TiledMap implements IRenderable
         this.height = (int) height;
         this.mapLayers = mapLayers;
         this.tileManager = tileManager;
-        this.camera = GameManager.getCamera();
+        camera = (CameraComponent) EntityManager.getComponent(GameManager.getCamera(), CameraComponent.class);
     }
 
     public void render(Renderer renderer)

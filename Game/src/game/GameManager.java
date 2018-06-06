@@ -1,5 +1,8 @@
 package game;
 
+import entities.EntityManager;
+import entities.components.CameraComponent;
+import entities.components.PositionComponent;
 import events.EventManager;
 import gfx.Renderer;
 import gfx.Window;
@@ -8,12 +11,14 @@ import scenes.IScene;
 import scenes.Scene;
 import scenes.SceneManager;
 
+import java.util.UUID;
+
 public abstract class GameManager
 {
     private static GameConfiguration gameConfiguration;
 
     private static Window window;
-    private static Camera camera;
+    private static UUID camera;
     private static Renderer renderer;
     private static EventManager eventManager;
     private static InputHandler inputHandler;
@@ -33,9 +38,14 @@ public abstract class GameManager
 
     public static void init()
     {
-        camera = new Camera((int) Math.ceil((double) gameConfiguration.getWidth() / gameConfiguration.getRenderScale()),
-                            (int) Math.ceil((double) gameConfiguration.getHeight() / gameConfiguration.getRenderScale()));
-        renderer = new Renderer(camera);
+        //camera = EntityManager.createEntity((int) Math.ceil((double) gameConfiguration.getWidth() / gameConfiguration.getRenderScale()),
+        //                    (int) Math.ceil((double) gameConfiguration.getHeight() / gameConfiguration.getRenderScale()));
+        camera = EntityManager.createEntity();
+        System.out.println("Camera: " + camera);
+        EntityManager.addSingletonComponent(camera, new CameraComponent((int) Math.ceil((double) gameConfiguration.getWidth() / gameConfiguration.getRenderScale()),
+                                                                        (int) Math.ceil((double) gameConfiguration.getHeight() / gameConfiguration.getRenderScale())));
+
+        renderer = new Renderer();
         updateLoop = new UpdateLoop();
         renderLoop = new RenderLoop(renderer);
         gameLoop = new GameLoop(gameConfiguration.getUPS(), updateLoop, renderLoop);
@@ -59,7 +69,7 @@ public abstract class GameManager
         gameLoop.stop();
     }
 
-    public static Camera getCamera()
+    public static UUID getCamera()
     {
         return camera;
     }

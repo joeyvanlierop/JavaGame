@@ -55,7 +55,7 @@ public final class EntityManager
     /**
      * Destroys Entity By Removing All References Of Its UUID In {@link #componentPool}
      *
-     * @param ID
+     * @param ID UUID Of Entity To Destroy
      */
     public static void destroyEntity(UUID ID)
     {
@@ -153,6 +153,8 @@ public final class EntityManager
         ArrayList<UUID> entityGroup = new ArrayList<>(entityTags.keySet());
         ArrayList<UUID> entitiesToRemove = new ArrayList<>();
 
+        java.lang.System.out.println(entityGroup);
+
         for(Class<? extends Component> component : components)
         {
             if(componentPool.containsKey(component))
@@ -161,6 +163,8 @@ public final class EntityManager
                 {
                     if(!entityGroup.contains(ID))
                     {
+                        java.lang.System.out.println("Remove: " + ID);
+
                         entitiesToRemove.add(ID);
                     }
                 }
@@ -172,6 +176,7 @@ public final class EntityManager
                 return entityGroup;
             }
         }
+        java.lang.System.out.println(entitiesToRemove);
 
         entityGroup.removeAll(entitiesToRemove);
 

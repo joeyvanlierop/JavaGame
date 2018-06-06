@@ -1,6 +1,7 @@
 package gfx;
 
-import game.Camera;
+import entities.EntityManager;
+import entities.components.CameraComponent;
 import game.GameManager;
 
 import java.awt.*;
@@ -10,15 +11,15 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
 public class Renderer extends Canvas {
-    private Camera camera;
 
+    CameraComponent camera;
     private int[] pixels;
     private BufferedImage view;
     private Graphics2D g;
 
-    public Renderer(Camera player)
+    public Renderer()
     {
-        this.camera = player;
+        camera = (CameraComponent) EntityManager.getComponent(GameManager.getCamera(), CameraComponent.class);
 
         this.view = new BufferedImage(camera.getViewportWidth(), camera.getViewportHeight(), BufferedImage.TYPE_INT_RGB);
         this.pixels = ((DataBufferInt) view.getRaster().getDataBuffer()).getData();
@@ -74,8 +75,8 @@ public class Renderer extends Canvas {
 
         for (int y = 0; y < spriteHeight; y++) {
             for (int x = 0; x < spriteWidth; x++) {
-                renderPixel(x + xPosition - camera.getX(),
-                            y + yPosition - camera.getY(),
+                renderPixel(x + xPosition - (int) camera.getX(),
+                            y + yPosition - (int) camera.getY(),
                                spritePixels[x + y * spriteWidth]);
             }
         }

@@ -6,6 +6,7 @@ public class MovementComponent extends Component
 {
     private int xMove = 0;
     private int yMove = 0;
+    private int dir = 0;
     private double speed;
 
     public MovementComponent()
@@ -38,6 +39,14 @@ public class MovementComponent extends Component
     public void setYMove(int yMove)
     {
         this.yMove = yMove;
+    }
+
+    public int getDir() {
+        return dir;
+    }
+
+    public void setDir(int dir) {
+        this.dir = dir;
     }
 
     public double getSpeed()
