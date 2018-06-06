@@ -3,7 +3,8 @@ package game;
 import gfx.Renderer;
 
 /**
- * Interface That Any Updateable Objects Implement
+ * Interface That Updateable Objects Implement
+ * May Be Remove In The Future
  */
 public interface IRenderable
 {
