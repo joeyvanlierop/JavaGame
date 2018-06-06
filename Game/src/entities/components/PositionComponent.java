@@ -35,4 +35,14 @@ public class PositionComponent extends Component
     public void setY(double y) {
         this.y = y;
     }
+
+    public void moveX(double xMove)
+    {
+        this.x += xMove;
+    }
+
+    public void moveY(double yMove)
+    {
+        this.y = yMove;
+    }
 }
