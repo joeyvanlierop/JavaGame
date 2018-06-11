@@ -53,7 +53,7 @@ public class Renderer extends Canvas {
         g.dispose();
         bs.show();
 
-        clearScreen(0xffffffff);
+        clearScreen(0xff000000);
     }
 
     public void renderPixel(int x, int y, int color)
@@ -75,8 +75,8 @@ public class Renderer extends Canvas {
 
         for (int y = 0; y < spriteHeight; y++) {
             for (int x = 0; x < spriteWidth; x++) {
-                renderPixel(x + xPosition - (int) camera.getX(),
-                            y + yPosition - (int) camera.getY(),
+                renderPixel(x + xPosition - camera.getX(),
+                            y + yPosition - camera.getY(),
                                spritePixels[x + y * spriteWidth]);
             }
         }

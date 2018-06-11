@@ -44,7 +44,6 @@ public abstract class GameManager
         System.out.println("Camera: " + camera);
         EntityManager.addSingletonComponent(camera, new CameraComponent((int) Math.ceil((double) gameConfiguration.getWidth() / gameConfiguration.getRenderScale()),
                                                                         (int) Math.ceil((double) gameConfiguration.getHeight() / gameConfiguration.getRenderScale())));
-
         renderer = new Renderer();
         updateLoop = new UpdateLoop();
         renderLoop = new RenderLoop(renderer);

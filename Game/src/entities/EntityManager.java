@@ -150,21 +150,30 @@ public final class EntityManager
      */
     public static ArrayList<UUID> getEntityGroup(Class<? extends Component>... components)
     {
-        ArrayList<UUID> entityGroup = new ArrayList<>(entityTags.keySet());
+        ArrayList<UUID> entityGroup = new ArrayList<>();
         ArrayList<UUID> entitiesToRemove = new ArrayList<>();
 
-        java.lang.System.out.println(entityGroup);
+        // Populate Entity Group With All Entities Of Each Requested Component Parameter
+        for(Class<? extends Component> component : components)
+        {
+            if(componentPool.containsKey(component)) {
+                for (UUID entity : componentPool.get(component).keySet()) {
+                    if (!entityGroup.contains(entity)) {
+                        entityGroup.add(entity);
+                    }
+                }
+            }
+        }
 
+        // Remove All Entities Which Don't Have Every Component Requested
         for(Class<? extends Component> component : components)
         {
             if(componentPool.containsKey(component))
             {
-                for(UUID ID : componentPool.get(component).keySet())
+                for(UUID ID : entityGroup)
                 {
-                    if(!entityGroup.contains(ID))
+                    if(!componentPool.get(component).keySet().contains(ID))
                     {
-                        java.lang.System.out.println("Remove: " + ID);
-
                         entitiesToRemove.add(ID);
                     }
                 }
@@ -176,10 +185,23 @@ public final class EntityManager
                 return entityGroup;
             }
         }
-        java.lang.System.out.println(entitiesToRemove);
 
         entityGroup.removeAll(entitiesToRemove);
 
         return entityGroup;
+    }
+
+    public static UUID getEntity(Class<? extends Component> component)
+    {
+        if(!componentPool.containsKey(component)) {
+            return null;
+        }
+
+        return (UUID) componentPool.get(component).keySet().toArray()[0];
+    }
+
+    public static UUID getEntity(Class<? extends Component>... components)
+    {
+        return getEntityGroup(components).get(0);
     }
 }

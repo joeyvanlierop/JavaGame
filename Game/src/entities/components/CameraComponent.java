@@ -1,6 +1,7 @@
 package entities.components;
 
 import entities.Component;
+import level.TiledMap;
 
 import java.util.UUID;
 
@@ -30,6 +31,22 @@ public class CameraComponent extends Component
         this.minOffsetY = minOffsetY;
         this.viewportWidth = viewportWidth;
         this.viewportHeight = viewportHeight;
+    }
+
+    public void setBounds(TiledMap map)
+    {
+        this.maxOffsetX = map.getWidth() * 16 - viewportWidth;
+        this.maxOffsetY = map.getHeight() * 16 - viewportHeight;
+        this.minOffsetX = 0;
+        this.minOffsetY = 0;
+    }
+
+    public void clearBounds()
+    {
+        this.maxOffsetX = Integer.MAX_VALUE;
+        this.maxOffsetY = Integer.MAX_VALUE;
+        this.minOffsetX = Integer.MIN_VALUE;
+        this.minOffsetY = Integer.MIN_VALUE;
     }
 
     public int getX() {
