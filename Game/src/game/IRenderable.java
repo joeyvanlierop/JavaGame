@@ -4,7 +4,7 @@ import gfx.Renderer;
 
 /**
  * Interface That Updateable Objects Implement
- * May Be Remove In The Future
+ * May Be Removed In The Future
  */
 public interface IRenderable
 {

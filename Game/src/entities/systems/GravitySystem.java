@@ -19,7 +19,7 @@ public class GravitySystem extends System
             PositionComponent positionComponent = (PositionComponent) EntityManager.getComponent(ID, PositionComponent.class);
             PhysicsComponent physicsComponent = (PhysicsComponent) EntityManager.getComponent(ID, PhysicsComponent.class);
 
-            positionComponent.setY();
+            //positionComponent.setY();
         }
     }
 }
