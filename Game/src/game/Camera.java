@@ -6,63 +6,104 @@ import level.TiledMap;
 
 import java.util.UUID;
 
-public class Camera {
+public class Camera
+{
+    private int x;
+    private int y;
     private int maxOffsetX;
     private int maxOffsetY;
     private int minOffsetX;
     private int minOffsetY;
     private int viewportWidth;
     private int viewportHeight;
-    private UUID targetID;
 
     public Camera(int viewportWidth, int viewportHeight)
     {
+       this(0, 0, viewportWidth, viewportHeight);
+    }
+
+    public Camera(int x, int y, int viewportWidth, int viewportHeight)
+    {
+        this.x = x;
+        this.y = y;
         this.viewportWidth = viewportWidth;
         this.viewportHeight = viewportHeight;
     }
 
-    public void init(UUID target, TiledMap map)
+    public void setBounds(TiledMap map)
     {
         this.maxOffsetX = map.getWidth() * 16 - viewportWidth;
         this.maxOffsetY = map.getHeight() * 16 - viewportHeight;
         this.minOffsetX = 0;
         this.minOffsetY = 0;
+    }
 
-        this.targetID = target;
+    public void clearBounds()
+    {
+        this.maxOffsetX = Integer.MAX_VALUE;
+        this.maxOffsetY = Integer.MAX_VALUE;
+        this.minOffsetX = Integer.MIN_VALUE;
+        this.minOffsetY = Integer.MIN_VALUE;
     }
 
     public int getX()
     {
-        //PositionComponent target = (PositionComponent) EntityManager.getComponent(this.targetID, PositionComponent.class);
-
-        //int camX = (int) this.target.getX() + (this.target.getWidth() / 2) - (viewportWidth / 2);
-        //int camX = (int) target.getX();
-        int camX = 300 - (viewportWidth / 2);
-
-        if (camX > maxOffsetX)
-            return maxOffsetX;
-
-        if (camX < minOffsetX)
-            return minOffsetX;
-
-        return camX;
+        return x;
     }
 
     public int getY()
     {
-        //PositionComponent target = (PositionComponent) EntityManager.getComponent(this.targetID, PositionComponent.class);
+        return y;
+    }
 
-        //int camY = (int) target.getY() + (target.getHeight() / 2) - (viewportHeight / 2);
-        //int camY = (int) target.getY();
-        int camY = 300 - (viewportHeight / 2);
+    public void setX(int x)
+    {
+        this.x = x;
+    }
 
-        if (camY > maxOffsetY)
-            return maxOffsetY;
+    public void setY(int y)
+    {
+        this.y = y;
+    }
 
-        if (camY < minOffsetY)
-            return minOffsetY;
+    public int getMaxOffsetX()
+    {
+        return maxOffsetX;
+    }
 
-        return camY;
+    public void setMaxOffsetX(int maxOffsetX)
+    {
+        this.maxOffsetX = maxOffsetX;
+    }
+
+    public int getMaxOffsetY()
+    {
+        return maxOffsetY;
+    }
+
+    public void setMaxOffsetY(int maxOffsetY)
+    {
+        this.maxOffsetY = maxOffsetY;
+    }
+
+    public int getMinOffsetX()
+    {
+        return minOffsetX;
+    }
+
+    public void setMinOffsetX(int minOffsetX)
+    {
+        this.minOffsetX = minOffsetX;
+    }
+
+    public int getMinOffsetY()
+    {
+        return minOffsetY;
+    }
+
+    public void setMinOffsetY(int minOffsetY)
+    {
+        this.minOffsetY = minOffsetY;
     }
 
     public int getViewportWidth()

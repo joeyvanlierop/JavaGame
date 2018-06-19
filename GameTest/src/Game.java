@@ -25,16 +25,10 @@ public class Game extends GameManager
         GameManager.getConfiguration().setUPS(60);
         GameManager.init();
 
-        UUID player = EntityManager.createEntity();
-
-        {
-            EntityManager.addSingletonComponent(player, new SpriteComponent(new Sprite(0, 16, 16, 16, new SpriteSheet("/img/player.png"))));
-            EntityManager.addSingletonComponent(player, new PositionComponent(50, 50));
-            EntityManager.addSingletonComponent(player, new MovementComponent(1));
-            EntityManager.addSingletonComponent(player, new CameraTargetComponent());
-        }
-
-        MovementComponent move = (MovementComponent) EntityManager.getComponent(player, MovementComponent.class);
+        Prefab playerPrefab = new Prefab().add(new SpriteComponent(new Sprite(0, 16, 16, 16, new SpriteSheet("/img/player.png"))))
+                                          .add(new PositionComponent(50, 50))
+                                          .add(new MovementComponent(1))
+                                          .add(new CameraTargetComponent());
 
         TiledMap level_01 = TiledMapLoader.loadMap("/maps/Level01.json");
         Scene scene = new Scene(level_01);
@@ -42,14 +36,17 @@ public class Game extends GameManager
         scene.addSystem(new MovementSystem());
         scene.addSystem(new CameraFollowSystem());
 
-        CameraComponent cam = (CameraComponent) EntityManager.getComponent(getCamera(), CameraComponent.class);
-        cam.setBounds(level_01);
+        UUID player = scene.getEntityManager().spawn(playerPrefab);
+        MovementComponent move = (MovementComponent) scene.getEntityManager().getComponent(player, MovementComponent.class);
+
+        //CameraComponent cam = (CameraComponent) EntityManager.getComponent(getCamera(), CameraComponent.class);
+        //cam.setBounds(level_01);
 
         GameManager.getInputHandler().registerKey(KeyEvent.VK_ESCAPE, () -> GameManager.stop());
         GameManager.getInputHandler().registerKey(KeyEvent.VK_ENTER, () -> GameManager.getEventManager().dispatchEvent(new CustomEvent()));
         GameManager.getInputHandler().registerKey(KeyEvent.VK_D, () -> move.setXMove(1));
-        GameManager.getInputHandler().registerKey(KeyEvent.VK_P, () -> EntityManager.destroyEntity(player));
-        GameManager.getInputHandler().registerKey(KeyEvent.VK_Z, () -> cam.clearBounds());
+        //GameManager.getInputHandler().registerKey(KeyEvent.VK_P, () -> EntityManager.destroyEntity(player));
+        //GameManager.getInputHandler().registerKey(KeyEvent.VK_Z, () -> cam.clearBounds());
 
         GameManager.start(scene);
 

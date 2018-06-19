@@ -2,9 +2,9 @@ package level;
 
 public class TiledMapLayer
 {
-    private int width;
-    private int height;
-    private int[] tiles;
+    public int width;
+    public int height;
+    public int[] tiles;
 
     public TiledMapLayer(long width, long height, int[] tiles)
     {

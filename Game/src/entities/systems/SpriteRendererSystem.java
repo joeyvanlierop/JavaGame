@@ -11,16 +11,19 @@ import java.util.UUID;
 
 public class SpriteRendererSystem extends System
 {
-    public void render(Renderer renderer)
+    public void render(EntityManager entityManager, Renderer renderer)
     {
-        ArrayList<UUID> entityGroup = EntityManager.getEntityGroup(SpriteComponent.class, PositionComponent.class);
+        ArrayList<UUID> entityGroup = entityManager.getEntityGroup(SpriteComponent.class, PositionComponent.class);
 
         for(UUID ID : entityGroup)
         {
-            SpriteComponent spriteComponent = (SpriteComponent) EntityManager.getComponent(ID, SpriteComponent.class);
-            PositionComponent positionComponent = (PositionComponent) EntityManager.getComponent(ID, PositionComponent.class);
+            SpriteComponent spriteComponent = (SpriteComponent) entityManager.getComponent(ID, SpriteComponent.class);
+            PositionComponent positionComponent = (PositionComponent) entityManager.getComponent(ID, PositionComponent.class);
 
-            renderer.renderSprite(spriteComponent.getSprite(), (int) positionComponent.getX(), (int) positionComponent.getY());
+            if(positionComponent.getX() < 200 && positionComponent.getY() < 200)
+            {
+                renderer.renderSprite(spriteComponent.getSprite(), (int) positionComponent.getX(), (int) positionComponent.getY());
+            }
         }
     }
 }

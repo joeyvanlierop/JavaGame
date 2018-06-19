@@ -10,14 +10,14 @@ import java.util.UUID;
 
 public class MovementSystem extends System
 {
-    public void update()
+    public void update(EntityManager entityManager)
     {
-        ArrayList<UUID> entityGroup = EntityManager.getEntityGroup(PositionComponent.class, MovementComponent.class);
+        ArrayList<UUID> entityGroup = entityManager.getEntityGroup(PositionComponent.class, MovementComponent.class);
 
         for(UUID ID : entityGroup)
         {
-            PositionComponent positionComponent = (PositionComponent) EntityManager.getComponent(ID, PositionComponent.class);
-            MovementComponent movementComponent = (MovementComponent) EntityManager.getComponent(ID, MovementComponent.class);
+            PositionComponent positionComponent = (PositionComponent) entityManager.getComponent(ID, PositionComponent.class);
+            MovementComponent movementComponent = (MovementComponent) entityManager.getComponent(ID, MovementComponent.class);
 
             while (movementComponent.getXMove() != 0)
             {

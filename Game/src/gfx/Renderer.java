@@ -1,7 +1,6 @@
 package gfx;
 
-import entities.EntityManager;
-import entities.components.CameraComponent;
+import game.Camera;
 import game.GameManager;
 
 import java.awt.*;
@@ -12,14 +11,14 @@ import java.awt.image.DataBufferInt;
 
 public class Renderer extends Canvas {
 
-    CameraComponent camera;
+    private Camera camera;
     private int[] pixels;
     private BufferedImage view;
     private Graphics2D g;
 
     public Renderer()
     {
-        camera = (CameraComponent) EntityManager.getComponent(GameManager.getCamera(), CameraComponent.class);
+        camera = GameManager.getCamera();
 
         this.view = new BufferedImage(camera.getViewportWidth(), camera.getViewportHeight(), BufferedImage.TYPE_INT_RGB);
         this.pixels = ((DataBufferInt) view.getRaster().getDataBuffer()).getData();

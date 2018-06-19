@@ -1,28 +1,22 @@
 package game;
 
-import entities.EntityManager;
-import entities.components.CameraComponent;
-import entities.components.PositionComponent;
 import events.EventManager;
 import gfx.Renderer;
 import gfx.Window;
 import input.InputHandler;
-import scenes.IScene;
 import scenes.Scene;
 import scenes.SceneManager;
-
-import java.util.UUID;
 
 public abstract class GameManager
 {
     private static GameConfiguration gameConfiguration;
 
     private static Window window;
-    private static UUID camera;
     private static Renderer renderer;
     private static EventManager eventManager;
     private static InputHandler inputHandler;
     private static SceneManager sceneManager;
+    private static Camera camera;
 
     public static GameLoop gameLoop;
     private static UpdateLoop updateLoop;
@@ -38,12 +32,7 @@ public abstract class GameManager
 
     public static void init()
     {
-        //camera = EntityManager.createEntity((int) Math.ceil((double) gameConfiguration.getWidth() / gameConfiguration.getRenderScale()),
-        //                    (int) Math.ceil((double) gameConfiguration.getHeight() / gameConfiguration.getRenderScale()));
-        camera = EntityManager.createEntity();
-        System.out.println("Camera: " + camera);
-        EntityManager.addSingletonComponent(camera, new CameraComponent((int) Math.ceil((double) gameConfiguration.getWidth() / gameConfiguration.getRenderScale()),
-                                                                        (int) Math.ceil((double) gameConfiguration.getHeight() / gameConfiguration.getRenderScale())));
+        camera = new Camera(gameConfiguration.getWidth() / gameConfiguration.getRenderScale(), gameConfiguration.getHeight() / gameConfiguration.getRenderScale());
         renderer = new Renderer();
         updateLoop = new UpdateLoop();
         renderLoop = new RenderLoop(renderer);
@@ -51,7 +40,7 @@ public abstract class GameManager
         eventManager = new EventManager();
     }
 
-    public static void start(IScene scene)
+    public static void start(Scene scene)
     {
         window = new Window(getConfiguration().getWidth(), gameConfiguration.getHeight(), renderer);
 
@@ -68,7 +57,7 @@ public abstract class GameManager
         gameLoop.stop();
     }
 
-    public static UUID getCamera()
+    public static Camera getCamera()
     {
         return camera;
     }

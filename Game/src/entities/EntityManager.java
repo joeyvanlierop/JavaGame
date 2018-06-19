@@ -1,5 +1,7 @@
 package entities;
 
+import entities.components.Prefab;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
@@ -13,18 +15,23 @@ import java.util.UUID;
  * https://github.com/ClickerMonkey/Ents/blob/master/Java/src/org/magnos/entity/
  * https://www.gamedev.net/articles/programming/general-and-gameplay-programming/understanding-component-entity-systems-r3013/
  */
-public final class EntityManager
+public class EntityManager
 {
     /**
      * Outer HashMap Key Is Component Class, Value Is Inner HashMap
      * Inner HashMap Key Is Entity UUID, Value Is List Of Component Objects (Type Of Outer HashMap Key)
      */
-    private static HashMap<Class<? extends Component>, HashMap<UUID, ArrayList<Component>>> componentPool = new HashMap<>();
+    private HashMap<Class<? extends Component>, HashMap<UUID, ArrayList<Component>>> componentPool = new HashMap<>();
 
     /**
      * HashMap Key Is Entity UUID, Value Is Entity Tag
      */
-    private static HashMap<UUID, String> entityTags = new HashMap<>();
+    private HashMap<UUID, String> entityTags = new HashMap<>();
+
+    /**
+     * Initializes An Entity Manager With No Entities
+     */
+    public EntityManager() { }
 
     /**
      * Creates An Entity With Empty Tag
@@ -32,7 +39,7 @@ public final class EntityManager
      *
      * @return UUID Of Created Entity
      */
-    public static UUID createEntity()
+    public UUID createEntity()
     {
         return createTaggedEntity("");
     }
@@ -43,7 +50,7 @@ public final class EntityManager
      *
      * @return UUID Of Created Entity
      */
-    public static UUID createTaggedEntity(String tag)
+    public UUID createTaggedEntity(String tag)
     {
         UUID ID = UUID.randomUUID();
 
@@ -57,7 +64,7 @@ public final class EntityManager
      *
      * @param ID UUID Of Entity To Destroy
      */
-    public static void destroyEntity(UUID ID)
+    public void destroyEntity(UUID ID)
     {
         for(HashMap IDS : componentPool.values())
         {
@@ -71,7 +78,7 @@ public final class EntityManager
      * @param ID UUID Of Entity That Component Is Being Added To
      * @param component Component Object That Is Being Added To Entity
      */
-    public static void addComponent(UUID ID, Component component)
+    public void addComponent(UUID ID, Component component)
     {
         // Instantiate Keys If Absent
         componentPool.putIfAbsent(component.getClass(), new HashMap<>());
@@ -87,7 +94,7 @@ public final class EntityManager
      * @param ID UUID Of Entity That Component Is Being Added To
      * @param component Component Object That Is Being Added To Entity
      */
-    public static void addSingletonComponent(UUID ID, Component component)
+    public void addSingletonComponent(UUID ID, Component component)
     {
         if(!hasComponent(ID, component.getClass()))
         {
@@ -106,7 +113,7 @@ public final class EntityManager
      * @param component Class Of Component Whose Presence Is Being Tested
      * @return
      */
-    public static boolean hasComponent(UUID ID, Class<? extends Component> component)
+    public boolean hasComponent(UUID ID, Class<? extends Component> component)
     {
         if(componentPool.containsKey(component))
         {
@@ -124,7 +131,7 @@ public final class EntityManager
      * @param component Component Type To Return
      * @return Component Of Type Linked To Entity
      */
-    public static Component getComponent(UUID ID, Class<? extends Component> component)
+    public Component getComponent(UUID ID, Class<? extends Component> component)
     {
         return componentPool.get(component).get(ID).get(0);
     }
@@ -137,7 +144,7 @@ public final class EntityManager
      * @param component Component Type To Return
      * @return ArrayList Of Components Of Type Linked To Entity
      */
-    public static ArrayList<Component> getComponents(UUID ID, Class<? extends Component> component)
+    public ArrayList<Component> getComponents(UUID ID, Class<? extends Component> component)
     {
         return componentPool.get(component).get(ID);
     }
@@ -146,9 +153,9 @@ public final class EntityManager
      * Returns A List Of Entities That Are Each Linked To Every Component Class Provided As A Parameter
      *
      * @param components Component Classes That Entities Are Being Checked For Existence
-     * @return ArrayList Populated With UUIDS Of Entites WIth Every Component Class Provided As A Parameter
+     * @return ArrayList Populated With UUIDS Of Entites With Every Component Class Provided As A Parameter
      */
-    public static ArrayList<UUID> getEntityGroup(Class<? extends Component>... components)
+    public ArrayList<UUID> getEntityGroup(Class<? extends Component>... components)
     {
         ArrayList<UUID> entityGroup = new ArrayList<>();
         ArrayList<UUID> entitiesToRemove = new ArrayList<>();
@@ -191,7 +198,13 @@ public final class EntityManager
         return entityGroup;
     }
 
-    public static UUID getEntity(Class<? extends Component> component)
+    /**
+     * Returns First Occurance Of Entity With Component Class Provided As A Parameter
+     *
+     * @param component Component Classes That Entities Are Being Checked For Existence
+     * @return UUID Of Entity With The Component Class Provided As A Parameter
+     */
+    public UUID getEntity(Class<? extends Component> component)
     {
         if(!componentPool.containsKey(component)) {
             return null;
@@ -200,7 +213,23 @@ public final class EntityManager
         return (UUID) componentPool.get(component).keySet().toArray()[0];
     }
 
-    public static UUID getEntity(Class<? extends Component>... components)
+    /**
+     * Instantiates An Entity With Components Defined In A Prefab
+     *
+     * @param prefab Prefab Of Entity To Instantiate
+     */
+    public UUID spawn(Prefab prefab)
+    {
+        UUID ID = createEntity();
+
+        for(Component component : prefab.getComponents())
+        {
+            addComponent(ID, component);
+        }
+        return ID;
+    }
+
+    public UUID getEntity(Class<? extends Component>... components)
     {
         return getEntityGroup(components).get(0);
     }

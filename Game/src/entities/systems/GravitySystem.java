@@ -10,14 +10,14 @@ import java.util.UUID;
 
 public class GravitySystem extends System
 {
-    public void update()
+    public void update(EntityManager entityManager)
     {
-        ArrayList<UUID> entityGroup = EntityManager.getEntityGroup(PositionComponent.class, PhysicsComponent.class);
+        ArrayList<UUID> entityGroup = entityManager.getEntityGroup(PositionComponent.class, PhysicsComponent.class);
 
         for(UUID ID : entityGroup)
         {
-            PositionComponent positionComponent = (PositionComponent) EntityManager.getComponent(ID, PositionComponent.class);
-            PhysicsComponent physicsComponent = (PhysicsComponent) EntityManager.getComponent(ID, PhysicsComponent.class);
+            PositionComponent positionComponent = (PositionComponent) entityManager.getComponent(ID, PositionComponent.class);
+            PhysicsComponent physicsComponent = (PhysicsComponent) entityManager.getComponent(ID, PhysicsComponent.class);
 
             //positionComponent.setY();
         }
